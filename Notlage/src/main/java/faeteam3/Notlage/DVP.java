@@ -1,5 +1,6 @@
 package faeteam3.Notlage;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,15 +15,11 @@ public class DVP {
 	
 	private Long registerId;
 	
-	private String name;
-	
-	
 	protected DVP() {}
 	
-	public DVP(String tnameype , Long registerId) 
+	public DVP(Long registerId) 
 	{
-		this.name = name;
-		this.registerId = registerId;
+		this.setRegisterId(registerId);
 	}
 	
 	public Long get_id()
@@ -30,18 +27,20 @@ public class DVP {
 		return id;
 	}
 	
-	public Long registerId()
-	{
+
+	public Long getRegisterId() {
 		return registerId;
 	}
-	
-	public String  toString()
-	{
-		return id+" "+name;
-	}
 
-	public String getName() {
-		return name;
+	public void setRegisterId(Long registerId) {
+		this.registerId = registerId;
 	}
+	@Override
+	public String toString()
+	{
+		return " "+id+" "+registerId;
+	}
+	
+	
 
 }

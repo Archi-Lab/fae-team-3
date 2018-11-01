@@ -21,79 +21,88 @@ public class MyServer
 	public void neue_Person(DVP np)
 	{
 		
-		Optional<DVP> db_person = dvp_repository.findByRegisterId(np.registerId());
+		Optional<DVP> db_person = dvp_repository.findByRegisterId(np.getRegisterId());
 		if(!db_person.isPresent())
 		{
 			final DVP savedPerson1 = this.dvp_repository.save(np);
 		}
 	}
 	
-	public void neue_Notlage(Notlage no)
+	public void nachricht_eingang(Nachricht na)
 	{
-		DVP person = no.get_betroffener();
-		
-		Optional<DVP> db_person = dvp_repository.findByRegisterId(person.registerId());
-		if(db_person.isPresent())
+		Optional<DVP> person = dvp_repository.findByRegisterId(na.dvp_real_id);
+		if (person.isPresent())
 		{
-			if(db_person.get().registerId() == person.registerId())
-			{
-				List<Notlage> reale_not = notlage_repository.findBybetroffener(db_person.get());
-				boolean test = false;
-				for (Notlage notlage : reale_not) 
-				{
-					if(notlage.ist_behoben()==false)
-					{
-						test=true;
-						break;
-					}
-				}
-				if(test==false)
-				{
-
-				    final Notlage not1 = new Notlage(no.get_datum(),db_person.get());
-
-				    final Notlage saved_not1 = this.notlage_repository.save(not1);
-				    sende_nachricht();
-				}
-			}
+			DVP pers = person.get();
+			Benachrichtigung neue_benach = new Benachrichtigung(pers.getRegisterId(),"infos");
+			Notlage notlage_neu= new Notlage("datum",pers,neue_benach);
+			notlage_repository.save(notlage_neu);
+			
+			
+			
+			sende_nachricht(neue_benach);
+			
 		}
-		
 	}
 	
-	public void notlage_behoben(DVP np)
+	public void bestätigung_eingang(Long dvp_id)
 	{
-		Optional<DVP> db_person = dvp_repository.findByRegisterId(np.registerId());
-		if(db_person.isPresent())
+		Optional<DVP> db_person = dvp_repository.findByRegisterId(dvp_id);
+		if (db_person.isPresent())
 		{
-			List<Notlage> not = notlage_repository.findBybetroffener(db_person.get());
-			Notlage die_Notlage = null;
-			boolean test = false;
-			for (Notlage notlage : not) 
+			DVP pers = db_person.get();
+			List<Notlage> no = notlage_repository.findBybetroffener(pers);
+			for (Notlage notlage : no) 
 			{
 				if(notlage.ist_behoben()==false)
 				{
-					die_Notlage=notlage;
-					test=true;
+					Benachrichtigung bena = notlage.get_benachrichtigung();
+					if(bena.isWurde_bestätigt()==false)
+					{
+						bena.setWurde_bestätigt();
+						notlage.set_wurde_bestätigt(bena);
+						notlage_repository.save(notlage);
+					}
 					break;
 				}
+				
 			}
-			if(test==true)
-			{
-				die_Notlage.set_behoben();
-				notlage_repository.save(die_Notlage);
-			    sende_erfolg_nachricht();
-			}
+			
 		}
 	}
 	
-	private void sende_nachricht()
+	public void bestätigung_notlage_behoben_eingang(Long dvp_id)
 	{
-		
+		Optional<DVP> db_person = dvp_repository.findByRegisterId(dvp_id);
+		if (db_person.isPresent())
+		{
+			DVP pers = db_person.get();
+			List<Notlage> no = notlage_repository.findBybetroffener(pers);
+			for (Notlage notlage : no) 
+			{
+				if(notlage.ist_behoben()==false)
+				{
+					notlage.set_behoben();
+					notlage_repository.save(notlage);
+					sende_erfolg_nachricht();
+					break;
+				}
+				
+			}
+			
+		}
+	}
+	
+	
+	
+	private void sende_nachricht(Benachrichtigung neue_benach)
+	{
+		// zu BP
 	}
 	
 	private void sende_erfolg_nachricht()
 	{
-		
+		// zu  wer die Notlage gemeldet hat
 	}
 
 }

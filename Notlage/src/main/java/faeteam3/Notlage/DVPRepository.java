@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DVPRepository extends CrudRepository<DVP, Long> {
-
-    List<DVP> findByName(String name);
     
     Optional<DVP> findById(Long id);
     
