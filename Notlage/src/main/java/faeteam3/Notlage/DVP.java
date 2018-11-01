@@ -1,4 +1,4 @@
-package com.example.demo;
+package faeteam3.Notlage;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

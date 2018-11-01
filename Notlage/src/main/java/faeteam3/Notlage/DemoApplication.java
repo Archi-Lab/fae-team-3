@@ -1,4 +1,4 @@
-package com.example.demo;
+package faeteam3.Notlage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // dannw arten auf erfoglsnachricht.
 
-// dann eintrag ädenrn in notlage
+// dann eintrag ï¿½denrn in notlage
 
 
 
