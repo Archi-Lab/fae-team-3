@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface NotlageRepository   extends CrudRepository<Notlage, Long> {
 
     List<Notlage> findBybehoben(boolean behoben);
-    List<Notlage> findBybetroffener(DVP betroffener);
+    List<Notlage> findBydvpid(Long dvpid);
 
     
 

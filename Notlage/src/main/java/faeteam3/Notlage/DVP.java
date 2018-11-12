@@ -1,46 +1,23 @@
 package faeteam3.Notlage;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
 public class DVP {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private Long uuid;
 	
-	private Long registerId;
-	
-	protected DVP() {}
-	
-	public DVP(Long registerId) 
+	public DVP(Long id)
 	{
-		this.setRegisterId(registerId);
+		uuid =id;
 	}
 	
-	public Long get_id()
+	public Long getUUID()
 	{
-		return id;
+		return uuid;
 	}
 	
-
-	public Long getRegisterId() {
-		return registerId;
-	}
-
-	public void setRegisterId(Long registerId) {
-		this.registerId = registerId;
-	}
 	@Override
-	public String toString()
+	public String  toString()
 	{
-		return " "+id+" "+registerId;
+		return String.valueOf(uuid);
 	}
-	
-	
 
 }

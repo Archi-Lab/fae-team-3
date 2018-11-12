@@ -19,59 +19,43 @@ public class Notlage {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	private String datum;
-	private boolean behoben=false;
+	private DVP dvp;
+	private Nachricht nachricht;
+	private int notlageStatus=1;
 	
-	@OneToOne
-	@JoinColumn(name = "betroffener_id", referencedColumnName = "id")
-	private DVP betroffener;
+//	
+//	@OneToOne
+//	@JoinColumn(name = "betroffener_id", referencedColumnName = "id")
+//	private Long dvpid;
 	
 //	@ElementCollection
 //	private ArrayList<Nachricht> nachrichten;
 	
-	@Embedded
-	private Benachrichtigung benachrichtigung;
+//	@OneToOne
+//	@JoinColumn(name = "id")//, referencedColumnName = "id")
+//	private Benachrichtigung benachrichtigung;
 	
 	protected Notlage() {}
 
-	public Notlage(String datum, DVP betroffener,Benachrichtigung benachrichtigung) 
+	public Notlage(String datum, Long dvpid,Benachrichtigung benachrichtigung) 
 	{
-		this.datum = datum;
-		this.betroffener  = betroffener;
-		this.benachrichtigung = benachrichtigung;
-		behoben=false;
-//		nachrichten = new  ArrayList<Nachricht>();
+		;
 	}
 	
-	public Benachrichtigung get_benachrichtigung()
-	{
-		return benachrichtigung;
-	}
-
-	
-//	public void add_nachrichtene(Nachricht payload) 
+//	public Benachrichtigung get_benachrichtigung()
 //	{
-//		nachrichten.add(payload);
+//		return benachrichtigung;
 //	}
-	
-	public boolean ist_behoben()
-	{
-		return behoben;
-	}
-	
-	public DVP get_betroffener()
-	{
-		return betroffener;
-	}
-	
-	public void set_behoben()
-	{
-		behoben =true;
-	}
+//
+//
+//	public Long get_dvpid()
+//	{
+//		return dvpid;
+//	}
 	
 	public String  toString()
 	{
-		return id+" "+behoben+" "+betroffener.toString()+" ";
+		return id+" ";
 	}
 	
 	public Long get_id()
@@ -79,18 +63,16 @@ public class Notlage {
 		return id;
 	}
 
-	public String get_datum() {
-		return datum;
-	}
-
-	public DVP get_DVP() {
-		return betroffener;
-	}
-
-	public void set_wurde_bestätigt(Benachrichtigung bena) 
+	
+	public void setStatus(int s)
 	{
-		benachrichtigung=bena;
-		
+		notlageStatus=s;
 	}
+	
+	public int getStatus()
+	{
+		return notlageStatus;
+	}
+
 
 }

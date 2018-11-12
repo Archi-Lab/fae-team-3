@@ -1,14 +1,21 @@
 package faeteam3.Notlage;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-@Embeddable
+@Entity
 public class Benachrichtigung 
 {
 	
-	
-	private Long betroffene_Person_id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+
+	private Long dvp_id;
 	
 	private String informationen;
 	
@@ -17,9 +24,9 @@ public class Benachrichtigung
 	public Benachrichtigung(){}
 	
 	 
-	public Benachrichtigung(Long betroffene_Person_id,String informationen)
+	public Benachrichtigung(Long dvp_id,String informationen)
 	{
-		this.setBetroffene_Person_id(betroffene_Person_id);
+		this.dvp_id = dvp_id;
 		this.setInformationen(informationen);
 		wurde_bestätigt=false;
 	}
@@ -41,12 +48,12 @@ public class Benachrichtigung
 		this.informationen = informationen;
 	}
 
-	public Long getBetroffene_Person_id() {
-		return betroffene_Person_id;
+	public Long get_dvp_id() {
+		return dvp_id;
 	}
 
-	public void setBetroffene_Person_id(Long betroffene_Person_id) {
-		this.betroffene_Person_id = betroffene_Person_id;
+	public void set_dvp_id(Long dvp_id) {
+		this.dvp_id = dvp_id;
 	}
 
 }

@@ -9,25 +9,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service("derService")
-public class MyServer
+public class Services_Klasse
 {
 	
-	@Autowired
-	private DVPRepository dvp_repository;
 	  
 	@Autowired
 	private NotlageRepository notlage_repository;
 	
-	public void neue_Person(DVP np)
-	{
-		
-		Optional<DVP> db_person = dvp_repository.findByRegisterId(np.getRegisterId());
-		if(!db_person.isPresent())
-		{
-			final DVP savedPerson1 = this.dvp_repository.save(np);
-		}
-	}
 	
+	/*
 	public void nachricht_eingang(Nachricht na)
 	{
 		Optional<DVP> person = dvp_repository.findByRegisterId(na.dvp_real_id);
@@ -93,7 +83,7 @@ public class MyServer
 		}
 	}
 	
-	
+	*/
 	
 	private void sende_nachricht(Benachrichtigung neue_benach)
 	{
@@ -103,6 +93,23 @@ public class MyServer
 	private void sende_erfolg_nachricht()
 	{
 		// zu  wer die Notlage gemeldet hat
+	}
+
+
+
+	public Nachricht erstelle_neue_Nachricht(Nachricht na) {
+		// TODO Auto-generated method stub
+		return  new Nachricht("h2", "payload", 44l);
+	}
+
+	public Nachricht findNachricht(long id) {
+		// TODO Auto-generated method stub
+		return new Nachricht("header", "payload", id);
+	}
+
+	public Notlage erstelle_neue_Notlage(Nachricht na) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
