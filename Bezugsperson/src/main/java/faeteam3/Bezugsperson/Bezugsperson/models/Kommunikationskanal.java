@@ -1,29 +1,25 @@
 package faeteam3.Bezugsperson.Bezugsperson.models;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Enumerated;
 
 @Embeddable
 public class Kommunikationskanal {
 
-    public Kommunikationskanal(String kanalBezeichnung, Kommunikationsart kommunikationsart, String techAdresse) {
+    public Kommunikationskanal(String kanalBezeichnung, Kommunikationsart kommunikationsart, TechAdresse techAdresse) {
         this.kanalBezeichnung = kanalBezeichnung;
         this.kommunikationsart = kommunikationsart;
         this.techAdresse = techAdresse;
     }
 
-    private String kanalBezeichnung;
+    private final String kanalBezeichnung;
 
     @Enumerated
-    private Kommunikationsart kommunikationsart;
+    private final Kommunikationsart kommunikationsart;
 
-    /*
-        die technische Adresse, bspw Handynummer oder E-Mail Adresse
-    */
-    private String techAdresse;
-
-
-
+    @Embedded
+    private final TechAdresse techAdresse;
 
 
     public String getKanalBezeichnung() {
@@ -34,15 +30,7 @@ public class Kommunikationskanal {
         return kommunikationsart;
     }
 
-    public String getTechAdresse() {
+    public TechAdresse getTechAdresse() {
         return techAdresse;
-    }
-
-    public void setKanalBezeichnung(String kanalBezeichnung) {
-        this.kanalBezeichnung = kanalBezeichnung;
-    }
-
-    public void setTechAdresse(String techAdresse) {
-        this.techAdresse = techAdresse;
     }
 }

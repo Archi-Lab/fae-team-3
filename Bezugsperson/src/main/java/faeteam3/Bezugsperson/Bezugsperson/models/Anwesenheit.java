@@ -4,9 +4,9 @@ import javax.persistence.Embeddable;
 import java.util.Calendar;
 
 @Embeddable
-public class Verfuegbarkeit {
+public class Anwesenheit {
 
-    public Verfuegbarkeit(Calendar startDate, Calendar endDate) {
+    public Anwesenheit(Calendar startDate, Calendar endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -19,15 +19,8 @@ public class Verfuegbarkeit {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate) {
-        this.startDate = startDate;
-    }
-
     public Calendar getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
 }

@@ -29,7 +29,7 @@ public class BezugspersonTest {
 
     @Test
     public void createBezugspersonExpectCreated() {
-        final Bezugsperson bezugsperson = new Bezugsperson("Meine externe Id");
+        final Bezugsperson bezugsperson = new Bezugsperson();
 
         bezugsperson.addAnwesenheit(new Anwesenheit(Calendar.getInstance(), Calendar.getInstance()));
         bezugsperson.addKommunikationskanal(new Kommunikationskanal("Meine Email", Kommunikationsart.EMAIL, new EMailAdresse("example@invalid.com")));
