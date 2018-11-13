@@ -1,5 +1,8 @@
 package faeteam3.Notlage;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class DVP {
 	
 	private Long uuid;

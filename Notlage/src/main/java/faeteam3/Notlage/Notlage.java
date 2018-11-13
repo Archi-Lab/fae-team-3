@@ -19,9 +19,16 @@ public class Notlage {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@Embedded
 	private DVP dvp;
 	private Nachricht nachricht;
-	private int notlageStatus=1;
+	private boolean bestätigt=false;
+	private boolean gelöst = false;
+	
+	@Embedded
+	private BP bestätiger;
+	@Embedded
+	private BP löser ;
 	
 //	
 //	@OneToOne
@@ -37,21 +44,58 @@ public class Notlage {
 	
 	protected Notlage() {}
 
-	public Notlage(String datum, Long dvpid,Benachrichtigung benachrichtigung) 
+	public Notlage(Long dvpid,Nachricht nachricht) 
 	{
-		;
+		dvp = new DVP(dvpid);
+		this.nachricht=nachricht;
 	}
 	
-//	public Benachrichtigung get_benachrichtigung()
-//	{
-//		return benachrichtigung;
-//	}
-//
-//
-//	public Long get_dvpid()
-//	{
-//		return dvpid;
-//	}
+	public Long getId()
+	{
+		return id;
+	}
+	
+	public DVP getDVP()
+	{
+		return dvp;
+	}
+	
+	public Nachricht getNachricht()
+	{
+		return nachricht;
+	}
+	
+	public boolean getBestätigt()
+	{
+		return bestätigt;
+	}
+	
+	public boolean getGelöstt()
+	{
+		return gelöst;
+	}
+	
+	public BP getBestätiger()
+	{
+		return bestätiger;
+	}
+	
+	public BP getLöser()
+	{
+		return löser;
+	}
+	
+	public void setBestätigt(Long uuid)
+	{
+		bestätigt=true;
+		bestätiger= new BP(uuid);
+	}
+	
+	public void setGelöst(Long uuid)
+	{
+		gelöst=true;
+		löser= new BP(uuid);
+	}
 	
 	public String  toString()
 	{
@@ -62,17 +106,6 @@ public class Notlage {
 	{
 		return id;
 	}
-
 	
-	public void setStatus(int s)
-	{
-		notlageStatus=s;
-	}
-	
-	public int getStatus()
-	{
-		return notlageStatus;
-	}
-
 
 }
