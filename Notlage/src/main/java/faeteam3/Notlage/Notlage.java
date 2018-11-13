@@ -21,14 +21,15 @@ public class Notlage {
 	
 	@Embedded
 	private DVP dvp;
+	@Embedded
 	private Nachricht nachricht;
 	private boolean bestätigt=false;
 	private boolean gelöst = false;
 	
 	@Embedded
-	private BP bestätiger;
+	private Bestätiger bestätiger;
 	@Embedded
-	private BP löser ;
+	private Löser löser ;
 	
 //	
 //	@OneToOne
@@ -44,9 +45,9 @@ public class Notlage {
 	
 	protected Notlage() {}
 
-	public Notlage(Long dvpid,Nachricht nachricht) 
+	public Notlage(Nachricht nachricht) 
 	{
-		dvp = new DVP(dvpid);
+		dvp = new DVP(nachricht.getDvpid());
 		this.nachricht=nachricht;
 	}
 	
@@ -75,12 +76,12 @@ public class Notlage {
 		return gelöst;
 	}
 	
-	public BP getBestätiger()
+	public Bestätiger getBestätiger()
 	{
 		return bestätiger;
 	}
 	
-	public BP getLöser()
+	public Löser getLöser()
 	{
 		return löser;
 	}
@@ -88,13 +89,13 @@ public class Notlage {
 	public void setBestätigt(Long uuid)
 	{
 		bestätigt=true;
-		bestätiger= new BP(uuid);
+		bestätiger= new Bestätiger(uuid);
 	}
 	
 	public void setGelöst(Long uuid)
 	{
 		gelöst=true;
-		löser= new BP(uuid);
+		löser= new Löser(uuid);
 	}
 	
 	public String  toString()

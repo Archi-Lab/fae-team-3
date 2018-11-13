@@ -8,12 +8,19 @@ public class Nachricht
 	
 	private String header;
 	private String payload;
+	private Long dvpid;
+	
+	protected Nachricht()
+	{
+		
+	}
 	
 	
-	public Nachricht(String header,String payload,Long dvp_id)
+	public Nachricht(String header,String payload,Long dvpid)
 	{
 		this.header=header;
 		this.payload=payload;
+		this.dvpid=dvpid;
 	}
 	
 	public String getHeader()
@@ -30,6 +37,14 @@ public class Nachricht
 	public String  toString()
 	{
 		return header+" "+payload;
+	}
+
+	public Long getDvpid() {
+		return dvpid;
+	}
+
+	public void setDvpid(Long dvpid) {
+		this.dvpid = dvpid;
 	}
 
 }

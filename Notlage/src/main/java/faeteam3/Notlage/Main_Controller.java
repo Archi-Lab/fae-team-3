@@ -47,21 +47,28 @@ public class Main_Controller
 		
 	
 	@RequestMapping(path="/Notlage", method=RequestMethod.POST)
-    public Resource<Notlage> neueNotlage(String name) 
+    public Resource<Notlage> neueNotlage(@RequestBody Nachricht nachricht) 
 	{
-		Long dvpid=3L;
-		Nachricht nachricht = null;
-		
 		// TODO ERROR hadnling
 
-		Notlage not = notlage_repository.save(new Notlage(dvpid,nachricht));
+		Notlage not = notlage_repository.save(new Notlage(nachricht));
 
         return new Resource<>(not,
-        		linkTo(methodOn(Services_Klasse.class).erstelle_neue_Nachricht(null)).withSelfRel());
+        		linkTo(methodOn(Main_Controller.class).notlageGet(not.get_id())).withSelfRel());
+    }
+	
+	@RequestMapping(path="/Notlage/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Object> deleteNotlage(@PathVariable long id) 
+	{
+		// TODO ERROR hadnling
+
+		notlage_repository.deleteById(id);
+
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
     }
 	
 	@RequestMapping(path="/Notlage/{id}", method=RequestMethod.GET)
-    public Resource<Notlage> notlageGet(Long  id) 
+    public Resource<Notlage> notlageGet(@PathVariable long id) 
 	{
 		Optional<Notlage> not = notlage_repository.findById(id);
 		// TODO ERROR hadnling
@@ -77,7 +84,7 @@ public class Main_Controller
         return res;
     }
 	
-	@RequestMapping(path="/Notlage/{id}/", method=RequestMethod.PUT)
+	@RequestMapping(path="/Notlage/{id}/bestätigen", method=RequestMethod.PUT)
     public Resource<Notlage> notlageBestätigen(@PathVariable long id ,Long  uuid) {
 		
 
@@ -94,7 +101,7 @@ public class Main_Controller
         return res;
     }
 	
-	@RequestMapping(path="/Notlage/{id}/", method=RequestMethod.PUT)
+	@RequestMapping(path="/Notlage/{id}/lösen", method=RequestMethod.PUT)
     public Resource<Notlage> notlageLösen(@PathVariable long id , Long  uuid) {
 
 		Optional<Notlage> not = notlage_repository.findById(id);

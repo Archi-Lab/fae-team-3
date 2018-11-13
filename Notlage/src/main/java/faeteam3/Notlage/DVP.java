@@ -7,6 +7,11 @@ public class DVP {
 	
 	private Long uuid;
 	
+	protected DVP()
+	{
+		
+	}
+	
 	public DVP(Long id)
 	{
 		uuid =id;
