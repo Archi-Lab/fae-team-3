@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import resource.NotlageAntwort;
 
 @RestController
 public class Main_Controller 
@@ -70,38 +69,44 @@ public class Main_Controller
 		
 		Resource<Notlage> res =new Resource<>(real_not);
 		res.add(linkTo(methodOn(Main_Controller.class).notlageGet(real_not.get_id())).withSelfRel());
-		res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen()).withRel("lösen"));
-		res.add(linkTo(methodOn(Main_Controller.class).notlageLösen()).withRel("bestätigen"));
+		if(real_not.getGelöstt()==false)
+			res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen(id,null)).withRel("lösen"));
+		if(real_not.getBestätigt()==false)
+			res.add(linkTo(methodOn(Main_Controller.class).notlageLösen(id,null)).withRel("bestätigen"));
 
         return res;
     }
 	
 	@RequestMapping(path="/Notlage/{id}/", method=RequestMethod.PUT)
-    public Resource<Notlage> notlageBestätigen(Long  uuid) {
+    public Resource<Notlage> notlageBestätigen(@PathVariable long id ,Long  uuid) {
 		
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{uuid}").build();
 
-		Optional<Notlage> not = notlage_repository.findById(id);
+		Optional<Notlage> not = notlage_repository.findById( id);
 		// TODO ERROR hadnling
 		Notlage real_not = not.get();
 		Resource<Notlage> res =new Resource<>(real_not);
 		res.add(linkTo(methodOn(Main_Controller.class).notlageGet(real_not.get_id())).withSelfRel());
-		res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen()).withRel("lösen"));
-		res.add(linkTo(methodOn(Main_Controller.class).notlageLösen()).withRel("bestätigen"));
+		if(real_not.getGelöstt()==false)
+			res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen(id,null)).withRel("lösen"));
+		if(real_not.getBestätigt()==false)
+			res.add(linkTo(methodOn(Main_Controller.class).notlageLösen(id,null)).withRel("bestätigen"));
 
         return res;
     }
 	
 	@RequestMapping(path="/Notlage/{id}/", method=RequestMethod.PUT)
-    public Resource<Notlage> notlageLösen(Long  uuid) {
+    public Resource<Notlage> notlageLösen(@PathVariable long id , Long  uuid) {
 
 		Optional<Notlage> not = notlage_repository.findById(id);
 		// TODO ERROR hadnling
 		Notlage real_not = not.get();
 		Resource<Notlage> res =new Resource<>(real_not);
 		res.add(linkTo(methodOn(Main_Controller.class).notlageGet(real_not.get_id())).withSelfRel());
-		res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen()).withRel("lösen"));
-		res.add(linkTo(methodOn(Main_Controller.class).notlageLösen()).withRel("bestätigen"));
+		if(real_not.getGelöstt()==false)
+			res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen(id,null)).withRel("lösen"));
+		if(real_not.getBestätigt()==false)
+			res.add(linkTo(methodOn(Main_Controller.class).notlageLösen(id,null)).withRel("bestätigen"));
+
 
         return res;
     }
