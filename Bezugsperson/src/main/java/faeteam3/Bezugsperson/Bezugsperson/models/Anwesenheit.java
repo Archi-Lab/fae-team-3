@@ -1,12 +1,9 @@
 package faeteam3.Bezugsperson.Bezugsperson.models;
 
-import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Calendar;
 
-@Embeddable
+@Entity(name = "Anwesenheit")
 public class Anwesenheit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

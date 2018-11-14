@@ -20,7 +20,7 @@ public class Bezugsperson {
     */
 
     @Embedded
-    private List<Anwesenheit> anwesenheitList = new ArrayList<Anwesenheit>();
+    private List<Long> anwesenheitList = new ArrayList<>();
 
     @Embedded
     private List<Kommunikationskanal> kommunikationskanalList = new ArrayList<Kommunikationskanal>();
@@ -49,7 +49,10 @@ public class Bezugsperson {
     }
 
     public void addAnwesenheit(Anwesenheit anwesenheit) {
-        anwesenheitList.add(anwesenheit);
+        if (anwesenheitList == null) {
+            anwesenheitList = new ArrayList<>();
+        }
+        anwesenheitList.add(anwesenheit.getAnw_id());
     }
 
     public void removeAnwesenheit(Anwesenheit anwesenheit) {
@@ -64,7 +67,7 @@ public class Bezugsperson {
         return bp_id_ext;
     }
 
-    public List<Anwesenheit> getAnwesenheitList() {
+    public List<Long> getAnwesenheitList() {
         return anwesenheitList;
     }
 

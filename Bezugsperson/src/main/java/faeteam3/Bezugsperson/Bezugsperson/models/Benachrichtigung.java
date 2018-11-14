@@ -19,6 +19,7 @@ public class Benachrichtigung {
     private Calendar gelesen;
 
 
+
     public Benachrichtigung(Long bp_id) {
         this.bp_id = bp_id;
     }
