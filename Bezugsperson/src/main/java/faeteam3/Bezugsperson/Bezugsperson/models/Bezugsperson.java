@@ -12,7 +12,7 @@ public class Bezugsperson {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bp_id;
 
-    private final String bp_id_ext;
+    private String bp_id_ext;
 
     /* TODO nicht sicher ob überhaupt benötigt
     @Embedded
@@ -20,15 +20,17 @@ public class Bezugsperson {
     */
 
     @Embedded
-    private List<Anwesenheit> anwesenheitList;
+    private List<Anwesenheit> anwesenheitList = new ArrayList<Anwesenheit>();
 
     @Embedded
-    private List<Kommunikationskanal> kommunikationskanalList;
+    private List<Kommunikationskanal> kommunikationskanalList = new ArrayList<Kommunikationskanal>();
 
+
+
+    public Bezugsperson() {
+    }
 
     public Bezugsperson(String bp_id_ext) {
-        kommunikationskanalList = new ArrayList<Kommunikationskanal>();
-        anwesenheitList = new ArrayList<Anwesenheit>();
         this.bp_id_ext = bp_id_ext;
     }
 
@@ -56,6 +58,10 @@ public class Bezugsperson {
 
     public Long getBp_id() {
         return bp_id;
+    }
+
+    public String getBp_id_ext() {
+        return bp_id_ext;
     }
 
     public List<Anwesenheit> getAnwesenheitList() {
