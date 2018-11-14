@@ -11,10 +11,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.web.client.RestTemplate;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,13 +51,56 @@ public class NotlageApplicationTests {
 	
 	@Test
 	public void exampleTest() throws Exception {
-		ResultActions rs = this.mvc.perform(post("/Notlage")
-		.param("header", "hhhh")
-        .param("payload", "pppp")
-        .param("dvpid", "123"));
+		LOGGER.info("Test ---");
+
 		
-		LOGGER.info(rs.toString());
+		String json_data = "{ \"header\": \"abc\" , \"payload\":\"qqw\", \"dvpid\":\"123\" }";
+		
+		// Send course as body to /students/Student1/courses
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/Notlage")
+				.content(json_data)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		this.mvc.perform(requestBuilder).andDo(MockMvcResultHandlers.print());
+		
+//		LOGGER.info(rs.toString());
 	}
+	
+	@Test
+	public void exampleTest2() throws Exception
+	{
+		LOGGER.info("Test ---");
+	    String json_data = "{ \"header\": \"abc\" , \"payload\":\"qqw\", \"dvpid\":\"44\" }";
+		
+		// Send course as body to /students/Student1/courses
+		RequestBuilder requestBuilder = MockMvcRequestBuilders
+				.post("/Notlage")
+				.content(json_data)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		MvcResult result = this.mvc.perform(requestBuilder).andReturn();
+		
+
+		MockHttpServletResponse response = result.getResponse();
+		LOGGER.info(response.getContentAsString());
+		
+		requestBuilder = MockMvcRequestBuilders
+				.delete("/Notlage/1")
+				.contentType(MediaType.APPLICATION_JSON);
+
+		result = this.mvc.perform(requestBuilder).andReturn();
+
+				
+	     
+	}
+	
+
+	
+	
+
+	
+	
 
 	
 
