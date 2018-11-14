@@ -14,12 +14,15 @@ public class Bestätiger {
 	
 	public Bestätiger(Long uuid)
 	{
-		this.bestätigerID = uuid;
+		this.setBestätigerID(uuid);
 	}
-	
-	private Long getUUID()
-	{
+
+	public Long getBestätigerID() {
 		return bestätigerID;
+	}
+
+	public void setBestätigerID(Long bestätigerID) {
+		this.bestätigerID = bestätigerID;
 	}
 
 }

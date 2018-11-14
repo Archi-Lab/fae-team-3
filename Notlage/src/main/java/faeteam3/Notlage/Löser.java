@@ -14,12 +14,17 @@ public class Löser {
 	
 	public Löser(Long uuid)
 	{
-		this.löserID = uuid;
+		this.setLöserID(uuid);
 	}
-	
-	private Long getUUID()
-	{
+
+	public Long getLöserID() {
 		return löserID;
 	}
+
+	public void setLöserID(Long löserID) {
+		this.löserID = löserID;
+	}
+	
+
 
 }

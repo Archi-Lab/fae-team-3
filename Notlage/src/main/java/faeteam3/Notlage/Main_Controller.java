@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import exceptions.IllegalActionExcepiton;
+
 
 @RestController
 public class Main_Controller 
@@ -47,31 +49,35 @@ public class Main_Controller
 		
 	
 	@RequestMapping(path="/Notlage", method=RequestMethod.POST)
-    public Resource<Notlage> neueNotlage(@RequestBody Nachricht nachricht) 
+    public ResponseEntity<Object> neueNotlage(@RequestBody Nachricht nachricht) 
 	{
-		// TODO ERROR hadnling
+		 if (nachricht.getDvpid()==null)
+		      throw new IllegalActionExcepiton("Illegale DVP ID-" + nachricht.getDvpid());
 
 		Notlage not = notlage_repository.save(new Notlage(nachricht));
+		
+		Resource<Notlage> res =new Resource<>(not);
+		res.add(linkTo(methodOn(Main_Controller.class).notlageGet(not.get_id())).withSelfRel());
 
-        return new Resource<>(not,
-        		linkTo(methodOn(Main_Controller.class).notlageGet(not.get_id())).withSelfRel());
+        return ResponseEntity.status(HttpStatus.OK).body(res);	
+        
     }
 	
 	@RequestMapping(path="/Notlage/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Object> deleteNotlage(@PathVariable long id) 
 	{
-		// TODO ERROR hadnling
-
 		notlage_repository.deleteById(id);
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
     }
 	
 	@RequestMapping(path="/Notlage/{id}", method=RequestMethod.GET)
-    public Resource<Notlage> notlageGet(@PathVariable long id) 
+    public ResponseEntity<Object> notlageGet(@PathVariable long id) 
 	{
 		Optional<Notlage> not = notlage_repository.findById(id);
-		// TODO ERROR hadnling
+		
+		if (!not.isPresent())
+		      throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
 		Notlage real_not = not.get();
 		
 		Resource<Notlage> res =new Resource<>(real_not);
@@ -81,41 +87,67 @@ public class Main_Controller
 		if(real_not.getBestätigt()==false)
 			res.add(linkTo(methodOn(Main_Controller.class).notlageLösen(id,null)).withRel("bestätigen"));
 
-        return res;
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
     }
 	
 	@RequestMapping(path="/Notlage/{id}/bestätigen", method=RequestMethod.PUT)
-    public Resource<Notlage> notlageBestätigen(@PathVariable long id ,Long  uuid) {
+    public ResponseEntity<Object> notlageBestätigen(@PathVariable long id ,@RequestBody ReturnBP  uuid) {
 		
 
 		Optional<Notlage> not = notlage_repository.findById( id);
-		// TODO ERROR hadnling
+		
+		if (!not.isPresent())
+		      throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
+		
 		Notlage real_not = not.get();
+		if(real_not.getBestätigt()==false)
+		{
+			real_not.setBestätigt(uuid.getUuid());
+		}
+		notlage_repository.save(real_not);
+		
 		Resource<Notlage> res =new Resource<>(real_not);
 		res.add(linkTo(methodOn(Main_Controller.class).notlageGet(real_not.get_id())).withSelfRel());
 		if(real_not.getGelöstt()==false)
+		{
 			res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen(id,null)).withRel("lösen"));
+		}
 		if(real_not.getBestätigt()==false)
+		{
 			res.add(linkTo(methodOn(Main_Controller.class).notlageLösen(id,null)).withRel("bestätigen"));
+		}
 
-        return res;
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
     }
 	
 	@RequestMapping(path="/Notlage/{id}/lösen", method=RequestMethod.PUT)
-    public Resource<Notlage> notlageLösen(@PathVariable long id , Long  uuid) {
+    public ResponseEntity<Object> notlageLösen(@PathVariable long id , @RequestBody ReturnBP  uuid) {
 
 		Optional<Notlage> not = notlage_repository.findById(id);
-		// TODO ERROR hadnling
+		
+		if (!not.isPresent())
+		      throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
+		
 		Notlage real_not = not.get();
+		if(real_not.getGelöstt()==false)
+		{
+			real_not.setGelöst(uuid.getUuid());
+		}
+
+		notlage_repository.save(real_not);
+
 		Resource<Notlage> res =new Resource<>(real_not);
 		res.add(linkTo(methodOn(Main_Controller.class).notlageGet(real_not.get_id())).withSelfRel());
 		if(real_not.getGelöstt()==false)
+		{
 			res.add(linkTo(methodOn(Main_Controller.class).notlageBestätigen(id,null)).withRel("lösen"));
+		}
 		if(real_not.getBestätigt()==false)
+		{
 			res.add(linkTo(methodOn(Main_Controller.class).notlageLösen(id,null)).withRel("bestätigen"));
+		}
 
-
-        return res;
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
     }
 	
 	@RequestMapping("/version")
