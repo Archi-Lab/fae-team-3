@@ -140,7 +140,7 @@ public class NotlageController {
             if(notlage.isOffen())
             {
                 LOGGER.info("Tries to mark Notlage<" + notlage.getNotlageId() +"> as confirmed.");
-                notlage.markBestaetigt(new Bezugsperson());
+                notlage.markBestaetigt(bezugsperson);
                 Resource<Notlage> resource = new Resource<>(notlage);
                 resource.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
                 notlageRepository.save(notlage);
@@ -167,7 +167,7 @@ public class NotlageController {
             if(notlage.isBestaetigt())
             {
                 LOGGER.info("Tries to mark Notlage<" + notlage.getNotlageId() +"> as solved.");
-                notlage.markGeloest(new Bezugsperson());
+                notlage.markGeloest(bezugsperson);
                 Resource<Notlage> resource = new Resource<>(optNotlage.get());
                 resource.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
                 notlageRepository.save(notlage);
