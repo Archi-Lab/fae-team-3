@@ -3,7 +3,6 @@ package faeteam3.Notlage.notlage.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import faeteam3.Notlage.Bezugsperson;
 import lombok.Getter;
-
 import javax.persistence.*;
 
 @Entity

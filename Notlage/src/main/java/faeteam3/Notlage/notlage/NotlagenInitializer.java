@@ -23,7 +23,7 @@ public class NotlagenInitializer implements ApplicationListener<ContextRefreshed
     /**
      * Erstellt Notlagen und persistiert sie mit  {@link NotlageRepository}.
      *
-     * @param Notlagen must not be {@literal null}.
+     * @param Notlage must not be {@literal null}.
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {

@@ -1,7 +1,6 @@
 package faeteam3.Notlage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Embeddable;
 
 @Embeddable
