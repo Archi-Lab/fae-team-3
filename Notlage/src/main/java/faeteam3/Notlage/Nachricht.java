@@ -5,20 +5,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Nachricht 
 {
-	
-	private String header;
 	private String payload;
+
+	public Nachricht(){}
 	
-	
-	public Nachricht(String header,String payload,Long dvp_id)
+	public Nachricht(String payload)
 	{
-		this.header=header;
 		this.payload=payload;
-	}
-	
-	public String getHeader()
-	{
-		return header;
 	}
 	
 	public String getPayload()
@@ -29,7 +22,7 @@ public class Nachricht
 	@Override
 	public String  toString()
 	{
-		return header+" "+payload;
+		return payload;
 	}
 
 }
