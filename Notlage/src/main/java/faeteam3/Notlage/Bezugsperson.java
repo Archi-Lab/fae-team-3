@@ -17,4 +17,18 @@ public class Bezugsperson {
     {
 
     }
+
+    public Bezugsperson(Long bezugspersonId)
+    {
+        this.bezugspersonId = bezugspersonId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof  Bezugsperson)
+        {
+            return ((Bezugsperson)obj).bezugspersonId == this.bezugspersonId;
+        }
+        return false;
+    }
 }

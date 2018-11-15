@@ -27,4 +27,8 @@ public class NotlageBestaetigung {
     {
         this.bezugsperson = bezugsperson;
     }
+
+    public Bezugsperson getBezugsperson() {
+        return bezugsperson;
+    }
 }
