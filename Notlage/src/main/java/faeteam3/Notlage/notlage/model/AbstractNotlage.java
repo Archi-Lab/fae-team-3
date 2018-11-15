@@ -10,31 +10,6 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class AbstractNotlage implements InterfaceNotlage {
 
-    /**
-     * Enumeration for all the statuses a {@link Notlage} can be in.
-     *
-     * @author Florian Bornes
-     */
-    public enum Status {
-
-
-        /**
-         * {@link Notlage} wurde erstellt und befindet sich in Bearbeitung und kann nicht geändert werden!
-         */
-        IN_BEARBEITUNG,
-
-        /**
-         * Die {@link Notlage} wurde von Bezugsperson zur Lösung angenommen.
-         */
-        BESTÄTIGT,
-
-        /**
-         * Die {@link Notlage} wurde von {@link faeteam3.Notlage.Bezugsperson} gelöst. Befindet sich in finalen Zustand und kann nicht mehr bearbeitet werden.
-         */
-        GELOEST
-
-    }
-
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @JsonIgnore
@@ -48,7 +23,7 @@ public abstract class AbstractNotlage implements InterfaceNotlage {
     @Embedded
     private final Nachricht nachricht;
 
-    protected Notlage.Status status;
+    protected Status status;
 
     @JsonIgnore
     @Setter
@@ -68,7 +43,7 @@ public abstract class AbstractNotlage implements InterfaceNotlage {
     {
         this.dvp = dvp;
         this.nachricht = nachricht;
-        this.status = Notlage.Status.IN_BEARBEITUNG;
+        this.status = Status.IN_BEARBEITUNG;
     }
 
     public Long getNotlageId() {
@@ -83,7 +58,7 @@ public abstract class AbstractNotlage implements InterfaceNotlage {
         return nachricht;
     }
 
-    public Notlage.Status getStatus() {
+    public Status getStatus() {
         return status;
     }
 }

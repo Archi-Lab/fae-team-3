@@ -6,14 +6,14 @@ import java.util.Optional;
 
 public interface InterfaceNotlage {
     /**
-     * returns {@code true} if {@link Notlage} is in state {@link Notlage.Status#BESTÄTIGT}, otherwise {@code false}
-     * @return {@code true} if {@link Notlage} is in state {@link Notlage.Status#BESTÄTIGT}, otherwise {@code false}
+     * returns {@code true} if {@link Notlage} is in state {@link Status#BESTÄTIGT}, otherwise {@code false}
+     * @return {@code true} if {@link Notlage} is in state {@link Status#BESTÄTIGT}, otherwise {@code false}
      */
     boolean isBestaetigt();
 
     /**
-     * returns {@code true} if {@link Notlage} is in state {@link Notlage.Status#GELOEST}, otherwise {@code false}
-     * @return {@code true} if {@link Notlage} is in state {@link Notlage.Status#GELOEST}, otherwise {@code false}
+     * returns {@code true} if {@link Notlage} is in state {@link Status#GELOEST}, otherwise {@code false}
+     * @return {@code true} if {@link Notlage} is in state {@link Status#GELOEST}, otherwise {@code false}
      */
     boolean isGeloest();
 
@@ -31,8 +31,8 @@ public interface InterfaceNotlage {
     void markGeloest(Bezugsperson bezugsperson);
 
     /**
-     * returns {@code true} if {@link Notlage} is in state {@link Notlage.Status#IN_BEARBEITUNG}, otherwise {@code false}
-     * @return {@code true} if {@link Notlage} is in state {@link Notlage.Status#IN_BEARBEITUNG}, otherwise {@code false}
+     * returns {@code true} if {@link Notlage} is in state {@link Status#IN_BEARBEITUNG}, otherwise {@code false}
+     * @return {@code true} if {@link Notlage} is in state {@link Status#IN_BEARBEITUNG}, otherwise {@code false}
      */
     boolean isOffen();
 
@@ -40,4 +40,5 @@ public interface InterfaceNotlage {
 
     Optional<NotlageLoesung> getLoesung();
 
+    Status getStatus();
 }

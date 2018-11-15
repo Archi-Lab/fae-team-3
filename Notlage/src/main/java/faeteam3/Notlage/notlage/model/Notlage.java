@@ -71,6 +71,11 @@ public class Notlage extends AbstractNotlage {
         {
             throw new IllegalStateException("Notlage was already solved!");
         }
+        Bezugsperson bezugspersonBestaetigung =getBestaetigung().get().getBezugsperson();
+        if(!bezugsperson.equals(bezugspersonBestaetigung))
+        {
+            throw new BezugspersonsArentEqual();
+        }
         this.loesung = new NotlageLoesung(bezugsperson);
         status = Status.GELOEST;
     }
