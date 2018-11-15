@@ -57,7 +57,7 @@ public class NotlageController {
 
       if(optNotlage.isPresent())
       {
-          LOGGER.info("Notlage<+"+ id+">+ found");
+          LOGGER.info("Notlage<+"+ id+"> found");
           Notlage notlage = optNotlage.get();
           Resource<Notlage> resources = new Resource<>(notlage);
           resources.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
@@ -78,7 +78,7 @@ public class NotlageController {
 
           return  ResponseEntity.ok(resources);
       }
-      LOGGER.info("Notlage<+"+ id+">+ not found");
+      LOGGER.info("Notlage<+"+ id+"> not found");
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -101,7 +101,7 @@ public class NotlageController {
         Resource<Notlage> resource = new Resource<>(optNotlage.get());
         if(optNotlage.isPresent())
         {
-            LOGGER.info("Notlage<+"+ id+">+ found");
+            LOGGER.info("Notlage<+"+ id+"> found");
             resource.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
             return ResponseEntity.ok(resource);
         }
@@ -117,7 +117,7 @@ public class NotlageController {
         Resource<Notlage> resource = new Resource<>(optNotlage.get());
         if(optNotlage.isPresent())
         {
-            LOGGER.info("Notlage<+"+ id+">+ found");
+            LOGGER.info("Notlage<+"+ id+"> found");
             LOGGER.info("RETURN NOTLAGE" + id);
             resource.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
             return ResponseEntity.ok(resource);
