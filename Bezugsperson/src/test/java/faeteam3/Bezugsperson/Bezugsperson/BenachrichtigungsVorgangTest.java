@@ -20,16 +20,16 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 
-public class BezugspersonTest {
+public class BenachrichtigungsVorgangTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BezugspersonTest.class);
 
     @Autowired
     private BezugspersonRepository bezugspersonRepository;
-
+/*
     @Test
     public void createBezugspersonExpectCreated() {
-        final Bezugsperson bezugsperson = new Bezugsperson("Meine externe Id");
+        final Bezugsperson bezugsperson = new Bezugsperson("12345");
 
         bezugsperson.addAnwesenheit(new Anwesenheit(Calendar.getInstance(), Calendar.getInstance()));
         bezugsperson.addKommunikationskanal(new Kommunikationskanal("Meine Email", Kommunikationsart.EMAIL, new EMailAdresse("example@invalid.com")));
@@ -45,8 +45,8 @@ public class BezugspersonTest {
 
         assertEquals(bezugsperson.getAnwesenheitList().size(), savedBezugsperson.getAnwesenheitList().size());
         for (int i = 0; i < bezugsperson.getAnwesenheitList().size(); i++) {
-            //assertEquals(bezugsperson.getAnwesenheitList().get(i).getStartDate(), savedBezugsperson.getAnwesenheitList().get(i).getStartDate());
-            //assertEquals(bezugsperson.getAnwesenheitList().get(i).getEndDate(), savedBezugsperson.getAnwesenheitList().get(i).getEndDate());
+            assertEquals(bezugsperson.getAnwesenheitList().get(i).getStartDate(), savedBezugsperson.getAnwesenheitList().get(i).getStartDate());
+            assertEquals(bezugsperson.getAnwesenheitList().get(i).getEndDate(), savedBezugsperson.getAnwesenheitList().get(i).getEndDate());
         }
 
         assertEquals(bezugsperson.getKommunikationskanalList().size(), savedBezugsperson.getKommunikationskanalList().size());
@@ -60,4 +60,5 @@ public class BezugspersonTest {
         LOGGER.info(savedBezugsperson.toString());
 
     }
+    */
 }
