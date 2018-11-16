@@ -105,7 +105,7 @@ public class NotlageController {
             resource.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
             return ResponseEntity.ok(resource);
         }
-        LOGGER.info("Notlage<+"+ id+">+ not found");
+        LOGGER.info("Notlage<+"+ id+"> not found");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -122,7 +122,7 @@ public class NotlageController {
             resource.add(linkTo(methodOn(NotlageController.class).getNotlagen(id)).withSelfRel());
             return ResponseEntity.ok(resource);
         }
-        LOGGER.info("Notlage<+"+ id+">+ not found");
+        LOGGER.info("Notlage<+"+ id+"> not found");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -149,7 +149,7 @@ public class NotlageController {
             LOGGER.info("Notlage isnt in state opened and cant be confirmed.");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        LOGGER.info("Notlage<+"+ id+">+ not found");
+        LOGGER.info("Notlage<+"+ id+"> not found");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -176,7 +176,7 @@ public class NotlageController {
             LOGGER.info("Notlage isnt in state confirmed and cant be solved.");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        LOGGER.info("Notlage<+"+ id+">+ not found");
+        LOGGER.info("Notlage<+"+ id+"> not found");
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
