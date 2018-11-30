@@ -1,7 +1,6 @@
 package faeteam3.Notlage.notlage.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import faeteam3.Notlage.Bezugsperson;
 import lombok.Getter;
 import javax.persistence.*;
 
@@ -15,20 +14,20 @@ public class NotlageBestaetigung {
     private Long notlageBestaetigungid;
 
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    private Bezugsperson bezugsperson;
+//    @JsonIgnore
+//    @OneToOne(cascade = CascadeType.ALL)
+//    private Bezugsperson bezugsperson;
 
     public NotlageBestaetigung()
     {
     }
 
-    public NotlageBestaetigung(Bezugsperson bezugsperson)
-    {
-        this.bezugsperson = bezugsperson;
-    }
-
-    public Bezugsperson getBezugsperson() {
-        return bezugsperson;
-    }
+//    public NotlageBestaetigung(Bezugsperson bezugsperson)
+//    {
+//        this.bezugsperson = bezugsperson;
+//    }
+//
+//    public Bezugsperson getBezugsperson() {
+//        return bezugsperson;
+//    }
 }

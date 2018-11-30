@@ -2,7 +2,6 @@ package faeteam3.Notlage.notlage.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import faeteam3.Notlage.Bezugsperson;
 import faeteam3.Notlage.DVP;
 import faeteam3.Notlage.Nachricht;
 
@@ -41,11 +40,27 @@ public class Notlage extends AbstractNotlage {
     }
 
 
+//    /**
+//     * Marks the {@link Notlage} as confirmed
+//     * @param bezugsperson which confirmed the {@link Notlage}
+//     */
+//    public void markBestaetigt(Bezugsperson bezugsperson) {
+//        if(status == Status.GELOEST)
+//        {
+//            throw new IllegalStateException("Notlage was already solved!");
+//        }
+//        else if(status == Status.BESTÄTIGT)
+//        {
+//            throw new IllegalStateException("Notlage was already confirmed!");
+//        }
+//        this.bestaetigung = new NotlageBestaetigung(bezugsperson);
+//        status = Status.BESTÄTIGT;
+//    }
+
     /**
      * Marks the {@link Notlage} as confirmed
-     * @param bezugsperson which confirmed the {@link Notlage}
      */
-    public void markBestaetigt(Bezugsperson bezugsperson) {
+    public void markBestaetigt() {
         if(status == Status.GELOEST)
         {
             throw new IllegalStateException("Notlage was already solved!");
@@ -54,15 +69,36 @@ public class Notlage extends AbstractNotlage {
         {
             throw new IllegalStateException("Notlage was already confirmed!");
         }
-	    this.bestaetigung = new NotlageBestaetigung(bezugsperson);
-	    status = Status.BESTÄTIGT;
+        this.bestaetigung = new NotlageBestaetigung();
+        status = Status.BESTÄTIGT;
     }
+
+//    /**
+//     * Marks the {@link Notlage} as solved
+//     * @param bezugsperson which solved the {@link Notlage}
+//     */
+//    public void markGeloest(Bezugsperson bezugsperson) {
+//        if(status == Status.IN_BEARBEITUNG)
+//        {
+//            throw new IllegalStateException("Notlage wasnt confirmed!");
+//        }
+//        else if(status == Status.GELOEST)
+//        {
+//            throw new IllegalStateException("Notlage was already solved!");
+//        }
+//        Bezugsperson bezugspersonBestaetigung =getBestaetigung().get().getBezugsperson();
+//        if(!bezugsperson.equals(bezugspersonBestaetigung))
+//        {
+//            throw new BezugspersonsArentEqual();
+//        }
+//        this.loesung = new NotlageLoesung(bezugsperson);
+//        status = Status.GELOEST;
+//    }
 
     /**
      * Marks the {@link Notlage} as solved
-     * @param bezugsperson which solved the {@link Notlage}
      */
-    public void markGeloest(Bezugsperson bezugsperson) {
+    public void markGeloest() {
         if(status == Status.IN_BEARBEITUNG)
         {
             throw new IllegalStateException("Notlage wasnt confirmed!");
@@ -71,12 +107,7 @@ public class Notlage extends AbstractNotlage {
         {
             throw new IllegalStateException("Notlage was already solved!");
         }
-        Bezugsperson bezugspersonBestaetigung =getBestaetigung().get().getBezugsperson();
-        if(!bezugsperson.equals(bezugspersonBestaetigung))
-        {
-            throw new BezugspersonsArentEqual();
-        }
-        this.loesung = new NotlageLoesung(bezugsperson);
+        this.loesung = new NotlageLoesung();
         status = Status.GELOEST;
     }
 

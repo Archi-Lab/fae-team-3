@@ -1,6 +1,5 @@
 package faeteam3.Notlage.app;
 
-import faeteam3.Notlage.Bezugsperson;
 import faeteam3.Notlage.DVP;
 import faeteam3.Notlage.Nachricht;
 import faeteam3.Notlage.notlage.model.BezugspersonsArentEqual;
@@ -43,6 +42,19 @@ public class NotlageTests {
         Assert.assertEquals(actual,expected);
     }
 
+//    @Test
+//    public void markBestaetigt_InBearbeitung_Bestaetigt()
+//    {
+//        final Status expected = Status.BESTÄTIGT;
+//        Status actual;
+//
+//        InterfaceNotlage n = createInstance();
+//        n.markBestaetigt(new Bezugsperson());
+//        actual = n.getStatus();
+//
+//        Assert.assertEquals(actual,expected);
+//    }
+
     @Test
     public void markBestaetigt_InBearbeitung_Bestaetigt()
     {
@@ -50,30 +62,63 @@ public class NotlageTests {
         Status actual;
 
         InterfaceNotlage n = createInstance();
-        n.markBestaetigt(new Bezugsperson());
+        n.markBestaetigt();
         actual = n.getStatus();
 
         Assert.assertEquals(actual,expected);
     }
 
+
+//    @Test(expected = IllegalStateException.class)
+//    public void markBestaetigt_Bestaetigt_IllegalStateException()
+//    {
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp = new Bezugsperson();
+//        n.markBestaetigt(bp);
+//        n.markBestaetigt(bp);
+//    }
+
     @Test(expected = IllegalStateException.class)
     public void markBestaetigt_Bestaetigt_IllegalStateException()
     {
         InterfaceNotlage n = createInstance();
-        Bezugsperson bp = new Bezugsperson();
-        n.markBestaetigt(bp);
-        n.markBestaetigt(bp);
+        n.markBestaetigt();
+        n.markBestaetigt();
     }
+
+//    @Test(expected = IllegalStateException.class)
+//    public void markBestaetigt_Geloest_IllegalStateException()
+//    {
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp = new Bezugsperson();
+//        n.markBestaetigt(bp);
+//        n.markGeloest(bp);
+//        n.markBestaetigt(bp);
+//    }
 
     @Test(expected = IllegalStateException.class)
     public void markBestaetigt_Geloest_IllegalStateException()
     {
         InterfaceNotlage n = createInstance();
-        Bezugsperson bp = new Bezugsperson();
-        n.markBestaetigt(bp);
-        n.markGeloest(bp);
-        n.markBestaetigt(bp);
+        n.markBestaetigt();
+        n.markGeloest();
+        n.markBestaetigt();
     }
+
+//    @Test
+//    public void markBestaetigt_Bestaetigt_Geloest()
+//    {
+//        final Status expected = Status.GELOEST;
+//        Status actual;
+//
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp = new Bezugsperson();
+//        n.markBestaetigt(bp);
+//        n.markGeloest(bp);
+//        actual = n.getStatus();
+//
+//        Assert.assertEquals(actual,expected);
+//    }
 
     @Test
     public void markBestaetigt_Bestaetigt_Geloest()
@@ -81,24 +126,23 @@ public class NotlageTests {
         final Status expected = Status.GELOEST;
         Status actual;
 
-        InterfaceNotlage n = createInstance();
-        Bezugsperson bp = new Bezugsperson();
-        n.markBestaetigt(bp);
-        n.markGeloest(bp);
+        InterfaceNotlage n = createInstance();;
+        n.markBestaetigt();
+        n.markGeloest();
         actual = n.getStatus();
 
         Assert.assertEquals(actual,expected);
     }
 
-    @Test(expected = BezugspersonsArentEqual.class)
-    public void markGeloest_BestaetigtANDBpBestaetigtNotLikeBpGeloest_Geloest()
-    {
-        InterfaceNotlage n = createInstance();
-        Bezugsperson bp1 = new Bezugsperson(1l);
-        Bezugsperson bp2 = new Bezugsperson(2l);
-        n.markBestaetigt(bp1);
-        n.markGeloest(bp2);
-    }
+//    @Test(expected = BezugspersonsArentEqual.class)
+//    public void markGeloest_BestaetigtANDBpBestaetigtNotLikeBpGeloest_Geloest()
+//    {
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp1 = new Bezugsperson(1l);
+//        Bezugsperson bp2 = new Bezugsperson(2l);
+//        n.markBestaetigt(bp1);
+//        n.markGeloest(bp2);
+//    }
 
 
     @Test
@@ -108,10 +152,9 @@ public class NotlageTests {
         Status actual;
 
         InterfaceNotlage n = createInstance();
-        Bezugsperson bp = new Bezugsperson();
 
-        n.markBestaetigt(bp);
-        n.markGeloest(bp);
+        n.markBestaetigt();
+        n.markGeloest();
         actual = n.getStatus();
 
         Assert.assertEquals(actual,expected);
@@ -122,19 +165,52 @@ public class NotlageTests {
     public void markGeloest_Geloest_IllegalStateException()
     {
         InterfaceNotlage n = createInstance();
-        Bezugsperson bp = new Bezugsperson();
-        n.markBestaetigt(bp);
-        n.markGeloest(bp);
-        n.markGeloest(bp);
+        n.markBestaetigt();
+        n.markGeloest();
+        n.markGeloest();
     }
 
     @Test(expected = IllegalStateException.class)
     public void markGeloest_inBearbeitung_IllegalStateException()
     {
         InterfaceNotlage n = createInstance();
-        Bezugsperson bp = new Bezugsperson();
-        n.markGeloest(bp);
+        n.markGeloest();
     }
+
+//    @Test
+//    public void markGeloest_Bestaetigt_Geloest()
+//    {
+//        final Status expected = Status.GELOEST;
+//        Status actual;
+//
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp = new Bezugsperson();
+//
+//        n.markBestaetigt(bp);
+//        n.markGeloest(bp);
+//        actual = n.getStatus();
+//
+//        Assert.assertEquals(actual,expected);
+//    }
+//
+//
+//    @Test(expected = IllegalStateException.class)
+//    public void markGeloest_Geloest_IllegalStateException()
+//    {
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp = new Bezugsperson();
+//        n.markBestaetigt(bp);
+//        n.markGeloest(bp);
+//        n.markGeloest(bp);
+//    }
+//
+//    @Test(expected = IllegalStateException.class)
+//    public void markGeloest_inBearbeitung_IllegalStateException()
+//    {
+//        InterfaceNotlage n = createInstance();
+//        Bezugsperson bp = new Bezugsperson();
+//        n.markGeloest(bp);
+//    }
 
     private InterfaceNotlage createDummyInstance()
     {

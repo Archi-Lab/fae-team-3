@@ -1,6 +1,5 @@
 package faeteam3.Notlage.notlage.model;
 
-import faeteam3.Notlage.Bezugsperson;
 
 import java.util.Optional;
 
@@ -18,17 +17,27 @@ public interface InterfaceNotlage {
     boolean isGeloest();
 
 
+//    /**
+//     * Marks the {@link Notlage} as confirmed
+//     * @param bezugsperson which confirmed the {@link Notlage}
+//     */
+//    void markBestaetigt(Bezugsperson bezugsperson);
+//
+//    /**
+//     * Marks the {@link Notlage} as solved
+//     * @param bezugsperson which solved the {@link Notlage}
+//     */
+//    void markGeloest(Bezugsperson bezugsperson);
+
     /**
      * Marks the {@link Notlage} as confirmed
-     * @param bezugsperson which confirmed the {@link Notlage}
      */
-    void markBestaetigt(Bezugsperson bezugsperson);
+    void markBestaetigt();
 
     /**
      * Marks the {@link Notlage} as solved
-     * @param bezugsperson which solved the {@link Notlage}
      */
-    void markGeloest(Bezugsperson bezugsperson);
+    void markGeloest();
 
     /**
      * returns {@code true} if {@link Notlage} is in state {@link Status#IN_BEARBEITUNG}, otherwise {@code false}
