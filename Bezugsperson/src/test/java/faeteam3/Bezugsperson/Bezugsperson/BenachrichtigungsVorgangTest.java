@@ -26,9 +26,10 @@ public class BenachrichtigungsVorgangTest {
 
     @Autowired
     private BezugspersonRepository bezugspersonRepository;
-/*
+
     @Test
     public void createBezugspersonExpectCreated() {
+    	/*
         final Bezugsperson bezugsperson = new Bezugsperson("12345");
 
         bezugsperson.addAnwesenheit(new Anwesenheit(Calendar.getInstance(), Calendar.getInstance()));
@@ -58,7 +59,7 @@ public class BenachrichtigungsVorgangTest {
 
         LOGGER.info("Bezugsperson was saved:");
         LOGGER.info(savedBezugsperson.toString());
-
+        */
     }
-    */
+    
 }
