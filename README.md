@@ -29,7 +29,7 @@ $ #docker rm $(docker ps -aq) #Alle Container entfernen
 
 $ for ((i=1; i<4; i++)); do docker run -d -p 127.0.1.$i:80:8080 -t behebungeinernotlage/bezugsperson; done
 
-$ #docker logs $name # Contfoainerlogs anzeigen
+$ #docker logs $name #Containerlogs anzeigen
 
 $
 
