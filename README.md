@@ -19,7 +19,7 @@ $ ./mvnw clean install dockerfile:build
 
 $ #docker images
 
-$ #docker run --name bp1 -p 127.0.1.1:80:8080 -t springio/bezugsperson # Im Vordergrund starten
+$ #docker run --name bp1 -p 127.0.1.1:80:8080 -t behebungeinernotlage/bezugsperson # Im Vordergrund starten
 
 $ #docker rm bp1 #Löschen eines Containers
 
