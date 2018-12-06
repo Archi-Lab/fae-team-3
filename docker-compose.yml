@@ -1,0 +1,43 @@
+version: '3'
+services:
+  bezugsperson:
+    image: bezugsperson
+    ports:
+      - 8080
+    networks:
+      - n-bp
+
+  bp-lb:
+    image: dockercloud/haproxy
+    ports:
+      - 8080:80
+    links:
+      - bezugsperson
+    networks:
+      - n-bp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+
+  fachlicheradministrator:
+    image: fachlicheradministrator
+    ports:
+      - 8080
+    networks:
+      - n-fa
+
+  fa-lb:
+    image: dockercloud/haproxy
+    ports:
+      - 8090:80
+    links:
+      - fachlicheradministrator
+    networks:
+      - n-fa
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+
+networks:
+  n-bp:
+    driver: bridge
+  n-fa:
+    driver: bridge
