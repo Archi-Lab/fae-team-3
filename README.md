@@ -27,9 +27,13 @@ $ #docker stop $(docker ps -q) #Alles stoppen
 
 $ #docker rm $(docker ps -aq) #Alle Container entfernen
 
-$ for ((i=1; i<4; i++)); do docker run -d -p 127.0.1.$i:80:8080 -t behebungeinernotlage/bezugsperson; done
+$ #for ((i=1; i<4; i++)); do docker run -d -p 127.0.1.$i:80:8080 -t behebungeinernotlage/bezugsperson; done
 
 $ #docker logs $name #Containerlogs anzeigen
+ 
+$ #docker-compose up --scale bezugsperson=3
 
-$
+$ docker-compose up -d --scale bezugsperson=3
+
+$ docker-compose stop
 
