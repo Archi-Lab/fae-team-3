@@ -10,3 +10,4 @@ public class BezugspersonApplication {
 		SpringApplication.run(BezugspersonApplication.class, args);
 	}
 }
+
