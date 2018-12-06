@@ -1,14 +1,20 @@
-Behebung einer Notlage
 
-Projekt:
-- Maven
+docker-compose up
 
-Projektstruktur:
-- Ein Ordner für je 1 Projekt/Microservice:
-	- Notlage
-	- FachlicherAdministrator
-	- Bezugsperson
+docker-compose ps
 
-Entwicklungsrichtlinien:
-- Für jede Subdomäne ein Branch
-- Bei Release wird der Branch in den Master commited -> Master enthält alle Releases
+docker-compose scale ms-n=4
+
+docker-compose start stop
+
+
+
+docker image ls
+docker container ls --all
+
+docker build -t my_image .
+
+docker save -o <path for generated tar file> <image name>
+docker save image > /home/save.tar
+	
+docker load -i <path to image tar file>
