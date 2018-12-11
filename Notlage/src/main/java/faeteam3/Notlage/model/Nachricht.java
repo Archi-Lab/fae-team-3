@@ -1,17 +1,23 @@
-package faeteam3.Notlage;
+package faeteam3.Notlage.model;
 
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Nachricht 
 {
-	private String payload;
+	private  Long dvpid;
+	private  String payload;
 
 	public Nachricht(){}
 	
-	public Nachricht(String payload)
+	public Nachricht(String payload,Long dvpid)
 	{
 		this.payload=payload;
+		this.dvpid=dvpid;
+	}
+	
+	public Long getDvpid() {
+		return dvpid;
 	}
 	
 	public String getPayload()
@@ -20,7 +26,7 @@ public class Nachricht
 	}
 	
 	@Override
-	public String  toString()
+	public String toString()
 	{
 		return payload;
 	}
