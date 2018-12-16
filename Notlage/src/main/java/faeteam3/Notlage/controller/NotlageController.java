@@ -1,8 +1,11 @@
 package faeteam3.Notlage.controller;
 
 
+import faeteam3.Notlage.kafka.SendeEinheit;
 import faeteam3.Notlage.model.Nachricht;
 import faeteam3.Notlage.model.Notlage;
+import faeteam3.Notlage.model.support.UngeRou;
+import faeteam3.Notlage.model.support.UngeVer;
 import faeteam3.Notlage.repository.NotlageRepository;
 
 import org.slf4j.Logger;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -39,8 +43,27 @@ public class NotlageController {
         this.notlageRepository = notlageRepository;
     }
     
+    @Autowired
+    private SendeEinheit sender;
+    
     public NotlageController()
     {}
+    
+    
+    // Kafka  test
+    @GetMapping("/notlage/hello")
+    public ResponseEntity<?> hello(){
+    	 LOGGER.info("SENDE Messages");
+
+         IntStream.range(0, 2)
+                 .forEach(i -> {
+                 sender.send2("ungeVer.t", new UngeVer(1L,"data1","data3",(long) i));
+                 sender.send3("ungeRou.t", new UngeRou(3L,"data44","data66",(long) i));
+                 }      
+                 );
+         LOGGER.info("All messages received");
+        return  ResponseEntity.ok().build();
+    }
     
     @PostMapping("/notlage")
     ResponseEntity<?> addNotlage(@RequestBody Nachricht nachricht) 
@@ -77,6 +100,7 @@ public class NotlageController {
 
     @GetMapping(path = "/notlage/{id}")
     public ResponseEntity<?> getNotlage(@PathVariable Long id){
+    	
     	
     	LOGGER.info("RETURN NOTLAGE" + id);
     	final Optional<Notlage> optNotlage = notlageRepository.findById(id);
