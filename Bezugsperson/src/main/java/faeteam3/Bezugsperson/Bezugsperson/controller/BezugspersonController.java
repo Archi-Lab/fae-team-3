@@ -27,6 +27,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/Bezugsperson")
 @ExposesResourceFor(Bezugsperson.class)
 public class BezugspersonController {
+	
+	
+	@Autowired
+	private WorkerService service;
 
     private final BezugspersonRepository bezugspersonRepository;
     private final AnwesenheitRepository anwesenheitRepository;
@@ -172,6 +176,7 @@ public class BezugspersonController {
     public ResponseEntity<?> benachrichtigeBPs(@ModelAttribute("notlage_uri") String notlage_uri,
                                                @ModelAttribute("dvp_id") String dvp_id,
                                                @ModelAttribute("nachricht") String nachricht) {
+    	// TODO  hier warscheinlich neue Notlage bearbeiten, also BP ermittlen. Hier link zu WorkerService
         return ResponseEntity.ok().build();
     }
 
