@@ -53,15 +53,16 @@ public class NotlageController {
     // Kafka  test
     @GetMapping("/notlage/hello")
     public ResponseEntity<?> hello(){
-    	 LOGGER.info("SENDE Messages");
+    	LOGGER.info("SENDE Messages");
 
-         IntStream.range(0, 2)
-                 .forEach(i -> {
-                 sender.send2("ungeVer.t", new UngeVer(1L,"data1","data3",(long) i));
-                 sender.send3("ungeRou.t", new UngeRou(3L,"data44","data66",(long) i));
+        IntStream.range(0, 2)
+                 .forEach(i -> 
+                 {
+                	 sender.sendUngeVer( new UngeVer(1L,"extraPayload","data3" ,(long) i));
+                	 sender.sendUngeRou( new UngeRou(3L,"extraPayload","data66",(long) i));
                  }      
-                 );
-         LOGGER.info("All messages received");
+                		 );
+        LOGGER.info("All messages received");
         return  ResponseEntity.ok().build();
     }
     
@@ -72,7 +73,10 @@ public class NotlageController {
     	if (nachricht.getDvpid()==null)
 		      throw new IllegalActionExcepiton("Illegale DVP ID-" + nachricht.getDvpid());
 
-		Notlage notlage = notlageRepository.save(new Notlage(nachricht));
+		Notlage notlage = new Notlage();
+		notlage.setDvp(nachricht.getDvpid());
+		notlage.setExtraDatat(nachricht.getPayload());
+		notlage = notlageRepository.save(notlage);
 		
 		Resource<Notlage> res =new Resource<>(notlage);
 		res.add(linkTo(methodOn(NotlageController.class).getNotlage(notlage.getNotlageId())).withSelfRel().withType("GET"));

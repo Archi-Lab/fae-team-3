@@ -11,6 +11,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.apache.kafka.common.header.Headers;
 
+import faeteam3.Notlage.controller.WorkerService;
 import faeteam3.Notlage.model.support.UngeRou;
 import faeteam3.Notlage.model.support.UngeVer;
 
@@ -25,23 +26,43 @@ public class ReceiverEinheit {
     return latch;
   }
   
-
-  @KafkaListener(topics = "ungeVer.t" , containerFactory = "kafkaListenerContainerFactory1") //  clientIdPrefix = "json",
-  public void receive_topic_1(ConsumerRecord<String, UngeRou> cr ) {
-    
+  @Autowired
+  private WorkerService serivce;
+  
+  @KafkaListener(topics = "ungeVer.t" , containerFactory = "kafkaListenerContainerFactoryY1") //  clientIdPrefix = "json",
+  public void receive_topic_n1(ConsumerRecord<String, String> cr ) {
     
     LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
     		typeIdHeader(cr.headers()), cr.value(), cr.toString());
+    serivce.bearbeiteMessageUngeVer(cr.value());
     latch.countDown();
   }
   
-  @KafkaListener(topics = "ungeRou.t" ,  containerFactory = "kafkaListenerContainerFactory2") //  clientIdPrefix = "json",
-  public void receive_topic_2(ConsumerRecord<String, UngeVer> cr) {
+  @KafkaListener(topics = "ungeRou.t" , containerFactory = "kafkaListenerContainerFactoryY2") //  clientIdPrefix = "json",
+  public void receive_topic_n2(ConsumerRecord<String, String> cr ) {
+    
     
     LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
     		typeIdHeader(cr.headers()), cr.value(), cr.toString());
+    serivce.bearbeiteMessageUngeRou(cr.value());
     latch.countDown();
   }
+
+//  @KafkaListener(topics = "ungeVer.t" , containerFactory = "kafkaListenerContainerFactory1") //  clientIdPrefix = "json",
+//  public void receive_topic_1(ConsumerRecord<String, UngeRou> cr ) {
+//
+//    LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
+//    		typeIdHeader(cr.headers()), cr.value(), cr.toString());   
+//    latch.countDown();
+//  }
+//  
+//  @KafkaListener(topics = "ungeRou.t" ,  containerFactory = "kafkaListenerContainerFactory2") //  clientIdPrefix = "json",
+//  public void receive_topic_2(ConsumerRecord<String, UngeVer> cr) {
+//    
+//    LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
+//    		typeIdHeader(cr.headers()), cr.value(), cr.toString());
+//    latch.countDown();
+//  }
   
   
   private static String typeIdHeader(Headers headers) {

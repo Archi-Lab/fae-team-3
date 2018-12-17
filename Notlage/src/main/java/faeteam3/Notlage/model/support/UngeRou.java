@@ -7,7 +7,7 @@ public class UngeRou
 	
 	public Long id;
 	
-	public String data1;
+	public String extraInfo;
 	
 	public String data2;
 	
@@ -20,12 +20,12 @@ public class UngeRou
 	
 	public UngeRou(
 			@JsonProperty("id") Long id,
-			@JsonProperty("data1") String data1,
+			@JsonProperty("extraInfo") String extraInfo,
 			@JsonProperty("data2") String data2,
 			@JsonProperty("dvp_id") Long dvp_id)
 	{
 		this.id=id;
-		this.data1=data1;
+		this.extraInfo=extraInfo;
 		this.data2=data2;
 		this.dvp_id=dvp_id;
 	}
@@ -33,7 +33,7 @@ public class UngeRou
 	@Override
 	public String toString()
 	{
-		return id +" "+ data1+" "+data2+" "+dvp_id;
+		return id +" "+ extraInfo+" "+data2+" "+dvp_id;
 	}
 
 	

@@ -37,8 +37,10 @@ public class NotlageRESTfulTests {
     public void intern_Basis()
     {
 		Long bp_id=43L;
-		Nachricht nachricht = new Nachricht("payload",3L);
-		Notlage notlage = new Notlage(nachricht);
+		Nachricht nachricht = new Nachricht(3L,"payload");
+		Notlage notlage = new Notlage();
+		notlage.setExtraDatat(nachricht.getPayload());
+		notlage.setDvp(nachricht.getDvpid());
 		
 		notlage.bestaetigeNotlage(bp_id);
 		Assert.assertEquals(true,notlage.isBestaetigt());
@@ -56,8 +58,10 @@ public class NotlageRESTfulTests {
     {
 		Long bp_id=43L;
 		Long dvp_id=12L;
-		Nachricht nachricht = new Nachricht("payload",dvp_id);
-		Notlage not = new Notlage(nachricht);
+		Nachricht nachricht = new Nachricht(dvp_id,"payload");
+		Notlage not = new Notlage();
+		not.setExtraDatat(nachricht.getPayload());
+		not.setDvp(nachricht.getDvpid());
 		notlageRepository.save(not);
 		
 		List<Notlage> list_nots = notlageRepository.findByDvpInternDvpID(dvp_id);

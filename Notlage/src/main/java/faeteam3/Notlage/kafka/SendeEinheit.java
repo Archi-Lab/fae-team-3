@@ -27,19 +27,18 @@ public class SendeEinheit {
   private KafkaTemplate<String, UngeRou> kafkaTemplate3;
   
 
-  public void send(String topic,Notlage payload) {
+  public void sendNotlage(Notlage payload) {
     LOGGER.info("sending payload='{}'", payload);
-    kafkaTemplate.send(topic, payload);
+    kafkaTemplate.send("Notlage.t", payload);
   }
   
-  
-  public void send2(String topic,UngeVer payload) {
+  public void sendUngeVer(UngeVer payload) {
 	    LOGGER.info("sending payload='{}'", payload);
-	    kafkaTemplate2.send(topic, payload);
+	    kafkaTemplate2.send("ungeVer.t", payload);
 	  }
   
-  public void send3(String topic,UngeRou payload) {
+  public void sendUngeRou(UngeRou payload) {
 	    LOGGER.info("sending payload='{}'", payload);
-	    kafkaTemplate3.send(topic, payload);
+	    kafkaTemplate3.send("ungeRou.t", payload);
 	  }
 }

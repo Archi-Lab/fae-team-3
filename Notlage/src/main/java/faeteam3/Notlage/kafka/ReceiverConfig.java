@@ -36,7 +36,7 @@ public class ReceiverConfig {
     props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
         StringDeserializer.class);
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-    		JsonSerializer.class);
+    		StringDeserializer.class);
     // allows a pool of processes to divide the work of consuming and processing records
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "group_name");
     // automatically reset the offset to the earliest offset
@@ -68,12 +68,83 @@ public class ReceiverConfig {
     return factory;
   }
   
+  @Bean
+  public ConsumerFactory<String, String> consumerFactoryY1() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"y1"), new StringDeserializer(), new StringDeserializer());
+  }
+
+  @Bean
+  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY1() {
+    ConcurrentKafkaListenerContainerFactory<String, String> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactoryY1());
+
+    return factory;
+  }
+  
+  @Bean
+  public ConsumerFactory<String, String> consumerFactoryY2() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"y2"), new StringDeserializer(), new StringDeserializer());
+  }
+
+  @Bean
+  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY2() {
+    ConcurrentKafkaListenerContainerFactory<String, String> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactoryY2());
+
+    return factory;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  @Bean
+  public ConsumerFactory<String, Object> consumerFactoryZ1() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"z1"), new StringDeserializer(), new JsonDeserializer(Object.class));
+  }
+
+  @Bean
+  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactoryZ1() {
+    ConcurrentKafkaListenerContainerFactory<String, Object> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactoryZ1());
+
+    return factory;
+  }
+  
+  @Bean
+  public ConsumerFactory<String, Object> consumerFactoryZ2() {
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"z2"), new StringDeserializer(), new JsonDeserializer(Object.class));
+  }
+
+  @Bean
+  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactoryZ2() {
+    ConcurrentKafkaListenerContainerFactory<String, Object> factory =
+        new ConcurrentKafkaListenerContainerFactory<>();
+    factory.setConsumerFactory(consumerFactoryZ2());
+
+    return factory;
+  }
+  
 
  
 
   @Bean
   public ConsumerFactory<String, UngeRou> consumerFactory1() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c2"), null, new JsonDeserializer(UngeRou.class));
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c2"), new StringDeserializer(), new JsonDeserializer(UngeRou.class));
   }
 
   @Bean
@@ -86,9 +157,12 @@ public class ReceiverConfig {
   }
   
   
+  
+  
+  
   @Bean
   public ConsumerFactory<String, UngeVer> consumerFactory2() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c3"), null, new JsonDeserializer(UngeVer.class));
+    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c3"), new StringDeserializer(), new JsonDeserializer(UngeVer.class));
   }
 
   @Bean

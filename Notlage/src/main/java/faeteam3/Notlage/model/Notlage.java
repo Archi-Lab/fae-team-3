@@ -22,7 +22,7 @@ public class Notlage  {
 
     @JsonIgnore
     @Embedded
-    private Nachricht nachricht;
+    private ExtraData data = new ExtraData("");
 
     private Status status;
 
@@ -36,16 +36,9 @@ public class Notlage  {
     
     public Notlage()
     {
-
+    	this.status = Status.IN_BEARBEITUNG;
     }
     
-    public Notlage(Nachricht nachricht)
-    {
-    	this.nachricht = nachricht;
-        this.dvp=new DVP(nachricht.getDvpid());
-        this.status = Status.IN_BEARBEITUNG;
-        
-    }
 
     public Long getNotlageId() {
         return notlageId;
@@ -54,9 +47,18 @@ public class Notlage  {
     public DVP getDvp() {
         return dvp;
     }
+    
+    public void setDvp(long id) {
+    	dvp= new DVP(id);
+    }
 
-    public Nachricht getNachricht() {
-        return nachricht;
+    
+    public ExtraData getExtraData() {
+        return data;
+    }
+    
+    public void setExtraDatat(String data) {
+    	this.data.setData(data);
     }
 
     public Status getStatus() {
