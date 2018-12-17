@@ -1,7 +1,6 @@
 package faeteam3.FachlicherAdministrator.kafka;
 
-import faeteam3.FachlicherAdministrator.models.support.Bezugsperson;
-import faeteam3.Notlage.model.support.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -24,70 +23,72 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @EnableKafka
 public class ReceiverConfig {
 
-//	 @Value("${spring.kafka.consumer.bootstrap-servers}")
+
+	//	@Value("${spring.kafka.consumer.bootstrap-servers}")
 	// 192.168.56.101:9092  = "kafka:9092"
-  private final String bootstrapServers ;
+	private final String bootstrapServers ;
 
-//  @Bean
-  public Map<String, Object> consumerConfigs(String bs, String id_for_client) {
-    Map<String, Object> props = new HashMap<>();
-    // list of host:port pairs used for establishing the initial connections to the Kafka cluster
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-        bs);
-    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-        StringDeserializer.class);
-    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-    		JsonSerializer.class);
-    // allows a pool of processes to divide the work of consuming and processing records
-    props.put(ConsumerConfig.GROUP_ID_CONFIG, "group_name");
-    // automatically reset the offset to the earliest offset
-    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-    props.put("client.id", "FA_Client_consumer"+id_for_client);
+	private final String id_BPMeta_group;
 
-    return props;
-  }
+	//  @Bean
+	public Map<String, Object> consumerConfigs(String bs, String id_group) {
+		Map<String, Object> props = new HashMap<>();
+		// list of host:port pairs used for establishing the initial connections to the Kafka cluster
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+				bs);
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+				StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+				StringDeserializer.class);
+		// allows a pool of processes to divide the work of consuming and processing records
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, id_group);
+		// automatically reset the offset to the earliest offset
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		// client.id muss eizigartig sein, auch in bezug zu vielen instanzen. ist aber optionales feld
+		//    props.put("client.id", "Notlage_Client_consumer"+id_for_client);
 
-  
-  public ReceiverConfig(@Value("${eventing.brokers}") final String servers) {
-	    this.bootstrapServers = servers;
-//	    log.info(servers);
+		return props;
 	}
-  
-  @Bean
-  public ConsumerFactory<String, Object> consumerFactory() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c1"));
-  }
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, Object> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory());
+	public ReceiverConfig(
+			@Value("${eventing.brokers}") final String servers,
+			@Value("${group.bpMetaReader}")   final String bpMetaReader) 
+	{
+		this.bootstrapServers = servers;
+		this.id_BPMeta_group=bpMetaReader;
+	}
 
-    return factory;
-  }
-  
+	@Bean
+	public ConsumerFactory<String, Object> consumerFactory() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"no_group_xx"));
+	}
 
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Object> factory =
+				new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactory());
 
-  @Bean
-  public ConsumerFactory<String, Bezugsperson> consumerFactory1() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c2"), null, new JsonDeserializer(Bezugsperson.class));
-  }
+		return factory;
+	}
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Bezugsperson>> kafkaListenerContainerFactory1() {
-    ConcurrentKafkaListenerContainerFactory<String, Bezugsperson> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory1());
+	@Bean
+	public ConsumerFactory<String, String> consumerFactoryY1() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,id_BPMeta_group), new StringDeserializer(), new StringDeserializer());
+	}
 
-    return factory;
-  }
-  
-  
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY1() {
+		ConcurrentKafkaListenerContainerFactory<String, String> factory =
+				new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactoryY1());
 
+		return factory;
+	}
 
-  @Bean
-  public ReceiverEinheit receiver() {
-    return new ReceiverEinheit();
-  }
+	
+	@Bean
+	public ReceiverEinheit receiver() {
+		return new ReceiverEinheit();
+	}
 }
