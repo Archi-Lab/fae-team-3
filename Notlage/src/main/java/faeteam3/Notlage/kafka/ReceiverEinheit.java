@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.apache.kafka.common.header.Headers;
@@ -26,10 +27,24 @@ public class ReceiverEinheit {
     return latch;
   }
   
+//  private final String id_notlage_topic;
+//  private final String id_UngeVer_topic;
+//  private final String id_UngeRou_topic;
+//	  
+//	public ReceiverEinheit(
+//			@Value("${topics.notlage}")   final String notlage,
+//			@Value("${topics.ungeRou}")   final String ungeRou,
+//			@Value("${topics.ungeVer}")   final String ungeVer) 
+//	{
+//		this.id_notlage_topic = notlage;
+//		this.id_UngeVer_topic=ungeRou;
+//		this.id_UngeRou_topic=ungeVer;
+//	}
+  
   @Autowired
   private WorkerService serivce;
   
-  @KafkaListener(topics = "ungeVer.t" , containerFactory = "kafkaListenerContainerFactoryY1") //  clientIdPrefix = "json",
+  @KafkaListener(topics = "${topics.ungeRou}" , containerFactory = "kafkaListenerContainerFactoryY1") //  clientIdPrefix = "json",
   public void receive_topic_n1(ConsumerRecord<String, String> cr ) {
     
     LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
@@ -38,7 +53,7 @@ public class ReceiverEinheit {
     latch.countDown();
   }
   
-  @KafkaListener(topics = "ungeRou.t" , containerFactory = "kafkaListenerContainerFactoryY2") //  clientIdPrefix = "json",
+  @KafkaListener(topics = "${topics.ungeVer}" , containerFactory = "kafkaListenerContainerFactoryY2") //  clientIdPrefix = "json",
   public void receive_topic_n2(ConsumerRecord<String, String> cr ) {
     
     
@@ -47,23 +62,6 @@ public class ReceiverEinheit {
     serivce.bearbeiteMessageUngeRou(cr.value());
     latch.countDown();
   }
-
-//  @KafkaListener(topics = "ungeVer.t" , containerFactory = "kafkaListenerContainerFactory1") //  clientIdPrefix = "json",
-//  public void receive_topic_1(ConsumerRecord<String, UngeRou> cr ) {
-//
-//    LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
-//    		typeIdHeader(cr.headers()), cr.value(), cr.toString());   
-//    latch.countDown();
-//  }
-//  
-//  @KafkaListener(topics = "ungeRou.t" ,  containerFactory = "kafkaListenerContainerFactory2") //  clientIdPrefix = "json",
-//  public void receive_topic_2(ConsumerRecord<String, UngeVer> cr) {
-//    
-//    LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
-//    		typeIdHeader(cr.headers()), cr.value(), cr.toString());
-//    latch.countDown();
-//  }
-  
   
   private static String typeIdHeader(Headers headers) {
       return StreamSupport.stream(headers.spliterator(), false)
@@ -71,7 +69,7 @@ public class ReceiverEinheit {
               .findFirst().map(header -> new String(header.value())).orElse("N/A");
 }
   
-  
+  // das ist sinnvoll, um direkt die sachen aus der properties datei auszulesen.
 //  @KafkaListener(groupId = "${my.kafka.conf.groupId}", topics = "#{'${my.kafka.conf.topics}'.split(',')}")
 //  public void storeTopicsDataToMongo(
 //          @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,

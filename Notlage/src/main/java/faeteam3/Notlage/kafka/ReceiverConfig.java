@@ -23,160 +23,89 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @EnableKafka
 public class ReceiverConfig {
 
-//	 @Value("${spring.kafka.consumer.bootstrap-servers}")
+
+	//	@Value("${spring.kafka.consumer.bootstrap-servers}")
 	// 192.168.56.101:9092  = "kafka:9092"
-  private final String bootstrapServers ;
+	private final String bootstrapServers ;
 
-//  @Bean
-  public Map<String, Object> consumerConfigs(String bs, String id_for_client) {
-    Map<String, Object> props = new HashMap<>();
-    // list of host:port pairs used for establishing the initial connections to the Kafka cluster
-    props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
-        bs);
-    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
-        StringDeserializer.class);
-    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-    		StringDeserializer.class);
-    // allows a pool of processes to divide the work of consuming and processing records
-    props.put(ConsumerConfig.GROUP_ID_CONFIG, "group_name");
-    // automatically reset the offset to the earliest offset
-    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-    props.put("client.id", "Notlage_Client_consumer"+id_for_client);
+	private final String id_UngeVer_group;
+	private final String id_UngeRou_group;
 
-    return props;
-  }
-  
+	//  @Bean
+	public Map<String, Object> consumerConfigs(String bs, String id_group) {
+		Map<String, Object> props = new HashMap<>();
+		// list of host:port pairs used for establishing the initial connections to the Kafka cluster
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
+				bs);
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+				StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+				StringDeserializer.class);
+		// allows a pool of processes to divide the work of consuming and processing records
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, id_group);
+		// automatically reset the offset to the earliest offset
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		// client.id muss eizigartig sein, auch in bezug zu vielen instanzen. ist aber optionales feld
+		//    props.put("client.id", "Notlage_Client_consumer"+id_for_client);
 
-
-  
-  public ReceiverConfig(@Value("${eventing.brokers}") final String servers) {
-	    this.bootstrapServers = servers;
-//	    log.info(servers);
+		return props;
 	}
-  
-  @Bean
-  public ConsumerFactory<String, Object> consumerFactory() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c1"));
-  }
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory() {
-    ConcurrentKafkaListenerContainerFactory<String, Object> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory());
+	public ReceiverConfig(
+			@Value("${eventing.brokers}") final String servers,
+			@Value("${group.ungeRou}")   final String ungeRou,
+			@Value("${group.ungeVer}")   final String ungeVer) 
+	{
+		this.bootstrapServers = servers;
+		this.id_UngeRou_group=ungeRou;
+		this.id_UngeVer_group=ungeVer;
+	}
 
-    return factory;
-  }
-  
-  @Bean
-  public ConsumerFactory<String, String> consumerFactoryY1() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"y1"), new StringDeserializer(), new StringDeserializer());
-  }
+	@Bean
+	public ConsumerFactory<String, Object> consumerFactory() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"no_group_xx"));
+	}
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY1() {
-    ConcurrentKafkaListenerContainerFactory<String, String> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactoryY1());
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, Object> factory =
+				new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactory());
 
-    return factory;
-  }
-  
-  @Bean
-  public ConsumerFactory<String, String> consumerFactoryY2() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"y2"), new StringDeserializer(), new StringDeserializer());
-  }
+		return factory;
+	}
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY2() {
-    ConcurrentKafkaListenerContainerFactory<String, String> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactoryY2());
+	@Bean
+	public ConsumerFactory<String, String> consumerFactoryY1() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"id_UngeVer_group"), new StringDeserializer(), new StringDeserializer());
+	}
 
-    return factory;
-  }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  @Bean
-  public ConsumerFactory<String, Object> consumerFactoryZ1() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"z1"), new StringDeserializer(), new JsonDeserializer(Object.class));
-  }
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY1() {
+		ConcurrentKafkaListenerContainerFactory<String, String> factory =
+				new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactoryY1());
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactoryZ1() {
-    ConcurrentKafkaListenerContainerFactory<String, Object> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactoryZ1());
+		return factory;
+	}
 
-    return factory;
-  }
-  
-  @Bean
-  public ConsumerFactory<String, Object> consumerFactoryZ2() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"z2"), new StringDeserializer(), new JsonDeserializer(Object.class));
-  }
+	@Bean
+	public ConsumerFactory<String, String> consumerFactoryY2() {
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"id_UngeRou_group"), new StringDeserializer(), new StringDeserializer());
+	}
 
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> kafkaListenerContainerFactoryZ2() {
-    ConcurrentKafkaListenerContainerFactory<String, Object> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactoryZ2());
+	@Bean
+	public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactoryY2() {
+		ConcurrentKafkaListenerContainerFactory<String, String> factory =
+				new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(consumerFactoryY2());
 
-    return factory;
-  }
-  
+		return factory;
+	}
 
- 
 
-  @Bean
-  public ConsumerFactory<String, UngeRou> consumerFactory1() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c2"), new StringDeserializer(), new JsonDeserializer(UngeRou.class));
-  }
-
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UngeRou>> kafkaListenerContainerFactory1() {
-    ConcurrentKafkaListenerContainerFactory<String, UngeRou> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory1());
-
-    return factory;
-  }
-  
-  
-  
-  
-  
-  @Bean
-  public ConsumerFactory<String, UngeVer> consumerFactory2() {
-    return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"c3"), new StringDeserializer(), new JsonDeserializer(UngeVer.class));
-  }
-
-  @Bean
-  public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UngeVer>> kafkaListenerContainerFactory2() {
-    ConcurrentKafkaListenerContainerFactory<String, UngeVer> factory =
-        new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(consumerFactory2());
-
-    return factory;
-  }
-  
-
-  @Bean
-  public ReceiverEinheit receiver() {
-    return new ReceiverEinheit();
-  }
+	@Bean
+	public ReceiverEinheit receiver() {
+		return new ReceiverEinheit();
+	}
 }

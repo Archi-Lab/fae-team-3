@@ -40,7 +40,7 @@ public class SenderConfig {
         StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
     		JsonSerializer.class);
-    props.put("client.id", "Notlage_Client_producer"+id_for_client);
+//    props.put("client.id", "Notlage_Client_producer"+id_for_client);
 
     return props;
   }
