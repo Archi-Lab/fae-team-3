@@ -77,7 +77,7 @@ public class ReceiverConfig {
 
 	@Bean
 	public ConsumerFactory<String, String> consumerFactoryY1() {
-		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"id_UngeVer_group"), new StringDeserializer(), new StringDeserializer());
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,id_UngeVer_group), new StringDeserializer(), new StringDeserializer());
 	}
 
 	@Bean
@@ -91,7 +91,7 @@ public class ReceiverConfig {
 
 	@Bean
 	public ConsumerFactory<String, String> consumerFactoryY2() {
-		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,"id_UngeRou_group"), new StringDeserializer(), new StringDeserializer());
+		return new DefaultKafkaConsumerFactory<>(consumerConfigs(bootstrapServers,id_UngeRou_group), new StringDeserializer(), new StringDeserializer());
 	}
 
 	@Bean
