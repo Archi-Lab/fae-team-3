@@ -19,8 +19,6 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import faeteam3.Bezugsperson.Bezugsperson.models.Bezugsperson;
 
 
-
-
 @Configuration
 public class SenderConfig {
 
@@ -39,7 +37,7 @@ public class SenderConfig {
         StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
     		JsonSerializer.class);
-    props.put("client.id", "BP_Client_producer"+id_for_client);
+//    props.put("client.id", "Notlage_Client_producer"+id_for_client);
 
     return props;
   }
@@ -68,15 +66,17 @@ public class SenderConfig {
   }
 
   @Bean
-  public ProducerFactory<String, Bezugsperson> producerFactoryMeta() {
+  public ProducerFactory<String, Bezugsperson> producerFactoryNotlage() {
     return new DefaultKafkaProducerFactory<>(producerConfigs(bootstrapServers,"p2"));
   }
 
   @Bean
   public KafkaTemplate<String, Bezugsperson> kafkaTemplateNotlage() {
-    return new KafkaTemplate<>(producerFactoryMeta());
+    return new KafkaTemplate<>(producerFactoryNotlage());
   }
   
+  
+
   @Bean
   public SendeEinheit sender() {
     return new SendeEinheit();

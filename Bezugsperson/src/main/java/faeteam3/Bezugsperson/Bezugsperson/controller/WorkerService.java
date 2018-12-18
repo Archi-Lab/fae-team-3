@@ -1,34 +1,110 @@
 package faeteam3.Bezugsperson.Bezugsperson.controller;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import faeteam3.Bezugsperson.Bezugsperson.models.support.Notlage;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import faeteam3.Bezugsperson.Bezugsperson.kafka.SendeEinheit;
+
 
 @Service
-public class WorkerService {
+public class WorkerService 
+{
+	private static final Logger LOGGER =
+		      LoggerFactory.getLogger(WorkerService.class);
 	
-	
-	// alle Topics von Relevanz
-//	BPCore.t ungeRou.t ungeVer.t    Notlage.t BPMeta.t
-	
-	public void analyseNotlage(Notlage n)
+
+    @Autowired
+    private SendeEinheit sender;
+    
+
+	public WorkerService()
 	{
-		if(!n.isBestaetigt() && !n.isGeloest())
-		{
-			// // TODO
-			// bearbeite neue offene Notlage
-			// Sende an Notlage MS  über Rest aufruf Put Funktionen auf für Bestätigen und Lösen
-			
-			//  und verlinke vom Rest Controler in diese Klasse, um die Funktionalität zu sammeln an einem Ort
-		}
-		else if(!n.isGeloest())
-		{
-			;
-		}
-		else if(!n.isBestaetigt())
-		{
-			;
-		}
+		
 	}
+
+	public void bearbeiteMessageNotlage(String val)
+	{
+	
+		ObjectMapper  objectMapper = new ObjectMapper();
+        Map<String, String> empMap = null;
+		try {
+			empMap = objectMapper.readValue(val,Map.class);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+        for (Map.Entry<String, String> entry : empMap.entrySet())
+        {
+        	String key = entry.getKey();
+        	String value = entry.getValue();
+        	LOGGER.info("Key: {}  Value {} ",key, value);
+        	if(key == "id")
+        	{
+        		; // vlt. in notlage speichern origin of notlage mit type
+        	}
+        	else if(key == "extraInfo")
+        	{
+        		;
+        	}
+        	else if(key == "data2")
+        	{
+        		; // vlt. in notlage speichern origin of notlage mit type
+        	}
+        	else if(key == "dvp_id")
+        	{
+        		;
+        	}
+        	
+        }
+ 
+//        sender.sendBPMeta(neue_nl);
+	}
+	
+	public void bearbeiteMessageBPCore(String val)
+	{
+
+		ObjectMapper  objectMapper = new ObjectMapper();
+        Map<String, String> empMap = null;
+		try {
+			empMap = objectMapper.readValue(val,Map.class);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+        for (Map.Entry<String, String> entry : empMap.entrySet())
+        {
+        	String key = entry.getKey();
+        	String value = entry.getValue();
+        	LOGGER.info("Key: {}  Value {} ",key, value);
+        	if(key == "id")
+        	{
+        		; // vlt. in notlage speichern origin of notlage mit type
+        	}
+        	else if(key == "extraInfo")
+        	{
+        		;
+        	}
+        	else if(key == "data2")
+        	{
+        		; // vlt. in notlage speichern origin of notlage mit type
+        	}
+        	else if(key == "dvp_id")
+        	{
+        		;
+        	}
+        	
+        }
+
+//        sender.sendBPMeta(neue_nl);
+	}
+	
 
 }
