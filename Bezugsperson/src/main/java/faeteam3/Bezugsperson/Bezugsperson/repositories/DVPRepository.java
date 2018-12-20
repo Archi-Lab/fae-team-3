@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import faeteam3.Bezugsperson.Bezugsperson.models.DVP;
 
+@Repository
 public interface DVPRepository extends CrudRepository<DVP, Long> {
 }
