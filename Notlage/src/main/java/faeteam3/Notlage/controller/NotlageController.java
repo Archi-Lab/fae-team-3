@@ -4,6 +4,7 @@ package faeteam3.Notlage.controller;
 import faeteam3.Notlage.kafka.SendeEinheit;
 import faeteam3.Notlage.model.Nachricht;
 import faeteam3.Notlage.model.Notlage;
+import faeteam3.Notlage.model.support.BPantwort;
 import faeteam3.Notlage.model.support.UngeRou;
 import faeteam3.Notlage.model.support.UngeVer;
 import faeteam3.Notlage.repository.NotlageRepository;
@@ -76,11 +77,13 @@ public class NotlageController {
 		Notlage notlage = new Notlage();
 		notlage.setDvp(nachricht.getDvpid());
 		notlage.setExtraDatat(nachricht.getPayload());
+		notlage.setOrigin(nachricht.getOrigin());
 		notlage = notlageRepository.save(notlage);
 		
 		Resource<Notlage> res =new Resource<>(notlage);
 		res.add(linkTo(methodOn(NotlageController.class).getNotlage(notlage.getNotlageId())).withSelfRel().withType("GET"));
 		LOGGER.info("POST Notlage success");
+		sender.sendNotlage(notlage);
 
        return ResponseEntity.status(HttpStatus.OK).body(res);	     
     }
@@ -93,6 +96,7 @@ public class NotlageController {
         notlageList.forEach(n->
         {
             Resource<Notlage> resource = new Resource<>(n);
+            resource.add(linkTo(methodOn(NotlageController.class).getNotlage(n.getNotlageId())).withSelfRel().withType("GET"));
             resourceLst.add(resource);
         });
         Resources<Resource<Notlage>> resources = new Resources(resourceLst);
@@ -129,7 +133,7 @@ public class NotlageController {
     }
 
     @PutMapping("/notlage/{id}/bestaetigen")
-    public ResponseEntity<?> notlageBestaetigen(@PathVariable Long id, @RequestBody Long bpID) {
+    public ResponseEntity<?> notlageBestaetigen(@PathVariable Long id, @RequestBody BPantwort antwort) {
     	
     	LOGGER.info("PUT: confirm Notlage");
     	final Optional<Notlage> optNotlage = this.notlageRepository.findById(id);
@@ -144,8 +148,9 @@ public class NotlageController {
 		LOGGER.info("Tries to mark Notlage<" + notlage.getNotlageId() +"> as confirmed.");
 		if(notlage.isBestaetigt()==false)
 		{
-			notlage.bestaetigeNotlage(bpID);
-			notlageRepository.save(notlage);
+			notlage.bestaetigeNotlage(antwort.getBpID());
+			notlage = notlageRepository.save(notlage);
+			sender.sendNotlage(notlage);
 		}
 
 		Resource<Notlage> res =new Resource<>(notlage);
@@ -154,13 +159,13 @@ public class NotlageController {
 			res.add(linkTo(methodOn(NotlageController.class).notlageBestaetigen(id,null)).withRel("lösen").withType("PUT"));
 		if(notlage.isBestaetigt()==false)
 			res.add(linkTo(methodOn(NotlageController.class).notlageLoesen(id,null)).withRel("bestätigen").withType("PUT"));
-
+		
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
         
     }
 
     @PutMapping("/notlage/{id}/loesen")
-    public ResponseEntity<?> notlageLoesen(@PathVariable Long id, @RequestBody Long bpID) {
+    public ResponseEntity<?> notlageLoesen(@PathVariable Long id, @RequestBody BPantwort antwort) {
     	
     	
     	LOGGER.info("PUT: solve Notlage");
@@ -176,8 +181,9 @@ public class NotlageController {
 		LOGGER.info("Tries to mark Notlage<" + notlage.getNotlageId() +"> as solved.");
 		if(notlage.isGeloest()==false)
 		{
-			notlage.loeseNotlage(bpID);
-			notlageRepository.save(notlage);
+			notlage.loeseNotlage(antwort.getBpID());
+			notlage = notlageRepository.save(notlage);
+			sender.sendNotlage(notlage);
 		}
 
 		Resource<Notlage> res =new Resource<>(notlage);
@@ -187,6 +193,7 @@ public class NotlageController {
 		if(notlage.isBestaetigt()==false)
 			res.add(linkTo(methodOn(NotlageController.class).notlageLoesen(id,null)).withRel("bestätigen").withType("PUT"));
 
+		
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
         
     }

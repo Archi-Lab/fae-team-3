@@ -8,6 +8,12 @@ public class ExtraData {
 	private String data="";
 	
 	
+	public ExtraData()
+	{
+		
+	}
+	
+	
 	public ExtraData(String data)
 	{
 		this.setData(data);

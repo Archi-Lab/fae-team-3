@@ -5,14 +5,16 @@ import javax.persistence.Embeddable;
 public class Nachricht 
 {
 	private Long dvpid;
+	private String origin;
 	private  String payload;
 
 	public Nachricht(){}
 	
-	public Nachricht(Long dvpid,String payload)
+	public Nachricht(String origin, Long dvpid,String payload)
 	{
 		this.dvpid=dvpid;
 		this.setPayload(payload);
+		this.origin=origin;
 	}
 
 	@Override
@@ -35,6 +37,14 @@ public class Nachricht
 
 	public void setDvpid(long dvpid) {
 		this.dvpid = dvpid;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 
 }

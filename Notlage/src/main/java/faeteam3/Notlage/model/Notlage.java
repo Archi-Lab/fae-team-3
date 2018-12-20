@@ -13,24 +13,25 @@ public class Notlage  {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-//    @JsonIgnore
     private Long notlageId;
 
-   // @JsonIgnore
     @Embedded
     private DVP dvp;
 
-    @JsonIgnore
     @Embedded
     private ExtraData data = new ExtraData("");
 
     private Status status;
 
-//    @JsonIgnore
+
     @Embedded
     private NotlageBestaetigung bestaetigung = new NotlageBestaetigung();
+    
+    private String origin;
+    
+    private long idOrigin;
 
-//    @JsonIgnore
+
     @Embedded
     private NotlageLoesung loesung = new NotlageLoesung();
     
@@ -130,5 +131,25 @@ public class Notlage  {
     public boolean isOffen() {
 	    return status == Status.IN_BEARBEITUNG;
     }
+
+
+	public String getOrigin() {
+		return origin;
+	}
+
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+
+	public long getIdOrigin() {
+		return idOrigin;
+	}
+
+
+	public void setIdOrigin(long idOrigin) {
+		this.idOrigin = idOrigin;
+	}
 
 }
