@@ -44,7 +44,7 @@ public class WorkerService
 		boolean alles_vorhanden=true;
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		String json = "{ \"color\" : \"Black\", \"type\" : \"FIAT\" }";
+		
 		JsonNode jsonNode = null;
 		try {
 			jsonNode = objectMapper.readTree(val);
@@ -58,7 +58,7 @@ public class WorkerService
 		if (node !=null)
 		{
 			String field = jsonNode.get("id").asText();
-			neue_nl.setIdOrigin(Long.parseLong(field));
+			neue_nl.setIdOrigin(field);
 		}
 		
 		node = jsonNode.get("extraInfo");
@@ -92,12 +92,12 @@ public class WorkerService
 		
 
 		ObjectMapper objectMapper = new ObjectMapper();
-		String json = "{ \"color\" : \"Black\", \"type\" : \"FIAT\" }";
+		
 		JsonNode jsonNode = null;
 		try {
 			jsonNode = objectMapper.readTree(val);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		JsonNode node = null;
@@ -106,7 +106,7 @@ public class WorkerService
 		if (node !=null)
 		{
 			String field = jsonNode.get("id").asText();
-			neue_nl.setIdOrigin(Long.parseLong(field));
+			neue_nl.setIdOrigin(field);
 		}
 		node = jsonNode.get("extraInfo");
 		if (node !=null)

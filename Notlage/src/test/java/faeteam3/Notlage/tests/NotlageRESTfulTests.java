@@ -1,4 +1,4 @@
-package faeteam3.Notlage.app;
+package faeteam3.Notlage.tests;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class NotlageRESTfulTests {
     public void intern_Basis()
     {
 		Long bp_id=43L;
-		Nachricht nachricht = new Nachricht(3L,"payload");
+		Nachricht nachricht = new Nachricht("17","ungeRou",3L,"payload");
 		Notlage notlage = new Notlage();
 		notlage.setExtraDatat(nachricht.getPayload());
 		notlage.setDvp(nachricht.getDvpid());
@@ -58,7 +58,7 @@ public class NotlageRESTfulTests {
     {
 		Long bp_id=43L;
 		Long dvp_id=12L;
-		Nachricht nachricht = new Nachricht(dvp_id,"payload");
+		Nachricht nachricht = new Nachricht("33","ungeVer",dvp_id,"payload");
 		Notlage not = new Notlage();
 		not.setExtraDatat(nachricht.getPayload());
 		not.setDvp(nachricht.getDvpid());
@@ -78,8 +78,5 @@ public class NotlageRESTfulTests {
 		Assert.assertEquals(bp_id,notlage.getNotlageLoesung().getNotlageLoesungid());
 		Assert.assertEquals(Status.GELOEST,notlage.getStatus());
     }
-	
-	
-
 
 }

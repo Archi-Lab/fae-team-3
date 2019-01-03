@@ -69,18 +69,7 @@ public class ReceiverEinheit {
       return StreamSupport.stream(headers.spliterator(), false)
               .filter(header -> header.key().equals("__TypeId__"))
               .findFirst().map(header -> new String(header.value())).orElse("N/A");
-}
-  
-  // das ist sinnvoll, um direkt die sachen aus der properties datei auszulesen.
-//  @KafkaListener(groupId = "${my.kafka.conf.groupId}", topics = "#{'${my.kafka.conf.topics}'.split(',')}")
-//  public void storeTopicsDataToMongo(
-//          @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-//          @Header(required = false, name= KafkaHeaders.RECEIVED_MESSAGE_KEY) String key,
-//          @Payload(required = false) String record)
-//  {
-//      log.trace(format("Received topic[%s] key[%s] payload[%s]", topic, key, record));
-//      //your code
-//  }
+ }
   
 }
 

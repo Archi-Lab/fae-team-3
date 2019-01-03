@@ -1,12 +1,7 @@
 package faeteam3.Notlage.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.Setter;
-
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity(name = "notlage")
 public class Notlage  {
@@ -29,7 +24,7 @@ public class Notlage  {
     
     private String origin;
     
-    private long idOrigin;
+    private String idOrigin;
 
 
     @Embedded
@@ -40,11 +35,6 @@ public class Notlage  {
     	this.status = Status.IN_BEARBEITUNG;
     }
     
-
-    public Long getNotlageId() {
-        return notlageId;
-    }
-
     public DVP getDvp() {
         return dvp;
     }
@@ -123,11 +113,7 @@ public class Notlage  {
         }     
     }
 
-    /**
-     * returns {@code true} if {@link Notlage} is in state {@link Status#IN_BEARBEITUNG}, otherwise {@code false}
-     * @return {@code true} if {@link Notlage} is in state {@link Status#IN_BEARBEITUNG}, otherwise {@code false}
-     */
-    
+
     public boolean isOffen() {
 	    return status == Status.IN_BEARBEITUNG;
     }
@@ -143,13 +129,25 @@ public class Notlage  {
 	}
 
 
-	public long getIdOrigin() {
+	public String getIdOrigin() {
 		return idOrigin;
 	}
 
 
-	public void setIdOrigin(long idOrigin) {
+	public void setIdOrigin(String idOrigin) {
 		this.idOrigin = idOrigin;
+	}
+
+
+
+	public Long getNotlageId() {
+		return notlageId;
+	}
+
+
+
+	public void setNotlageId(Long notlageId) {
+		this.notlageId = notlageId;
 	}
 
 }

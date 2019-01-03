@@ -49,16 +49,17 @@ public class SendeEinheit {
 
   public void sendNotlage(Notlage payload) {
     LOGGER.info("sending payload='{}'", payload);
-    kafkaTemplate.send(id_notlage_topic, payload);
+    kafkaTemplate.send(id_notlage_topic, String.valueOf(payload.getNotlageId()),payload);
   }
   
   public void sendUngeVer(UngeVer payload) {
 	    LOGGER.info("sending payload='{}'", payload);
-	    kafkaTemplate2.send(id_UngeVer_topic, payload);
+	    kafkaTemplate2.send(id_UngeVer_topic, String.valueOf(payload.id),payload);
 	  }
   
   public void sendUngeRou(UngeRou payload) {
 	    LOGGER.info("sending payload='{}'", payload);
-	    kafkaTemplate3.send(id_UngeRou_topic, payload);
+	    kafkaTemplate3.send(id_UngeRou_topic, String.valueOf(payload.id),payload);
 	  }
 }
+

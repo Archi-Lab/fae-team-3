@@ -78,6 +78,7 @@ public class NotlageController {
 		notlage.setDvp(nachricht.getDvpid());
 		notlage.setExtraDatat(nachricht.getPayload());
 		notlage.setOrigin(nachricht.getOrigin());
+		notlage.setIdOrigin(nachricht.getOrigin_id());
 		notlage = notlageRepository.save(notlage);
 		
 		Resource<Notlage> res =new Resource<>(notlage);
@@ -205,13 +206,6 @@ public class NotlageController {
         return ResponseEntity.status(HttpStatus.OK).body(res);	  
     }
     
-	@RequestMapping(path="/Notlage/{id}", method=RequestMethod.DELETE)
-    public ResponseEntity<Object> deleteNotlage(@PathVariable long id) 
-	{
-		notlageRepository.deleteById(id);
-
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
-    }
 	
 	@RequestMapping("/version")
     public String version() 
