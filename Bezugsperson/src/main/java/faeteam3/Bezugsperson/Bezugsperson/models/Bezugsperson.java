@@ -2,15 +2,19 @@ package faeteam3.Bezugsperson.Bezugsperson.models;
 
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Bezugsperson")
 public class Bezugsperson {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long bp_id;
+	@Id
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid",strategy = "uuid")
+    private String bp_id;
 
     private String bp_id_ext;
 
@@ -19,13 +23,12 @@ public class Bezugsperson {
     private Kontaktdaten kontaktdaten;
     */
 
-    @Embedded
-    private List<Long> anwesenheitList = new ArrayList<>();
+    @OneToMany
+    private List<Anwesenheit> anwesenheitList = new ArrayList<Anwesenheit>();
 
-    @Embedded
+
+    @OneToMany
     private List<Kommunikationskanal> kommunikationskanalList = new ArrayList<Kommunikationskanal>();
-
-
 
     public Bezugsperson() {
     }
@@ -41,7 +44,7 @@ public class Bezugsperson {
 
     public void removeKommunikationskanal(String kanalbezeichnung) {
         for (Kommunikationskanal kommunikationskanal : kommunikationskanalList) {
-            if (kommunikationskanal.getKanalBezeichnung().equals(kommunikationskanal)) {
+            if (kommunikationskanal.getKanalBezeichnung().equals(kommunikationskanal.getKanalBezeichnung())) {
                 kommunikationskanalList.remove(kommunikationskanal);
                 return;
             }
@@ -52,14 +55,14 @@ public class Bezugsperson {
         if (anwesenheitList == null) {
             anwesenheitList = new ArrayList<>();
         }
-        anwesenheitList.add(anwesenheit.getAnw_id());
+        anwesenheitList.add(anwesenheit);
     }
 
     public void removeAnwesenheit(Anwesenheit anwesenheit) {
         anwesenheitList.remove(anwesenheit);
     }
 
-    public Long getBp_id() {
+    public String getBp_id() {
         return bp_id;
     }
 
@@ -67,7 +70,7 @@ public class Bezugsperson {
         return bp_id_ext;
     }
 
-    public List<Long> getAnwesenheitList() {
+    public List<Anwesenheit> getAnwesenheitList() {
         return anwesenheitList;
     }
 
