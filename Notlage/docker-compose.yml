@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+ ms-notlage:
+  image: ms-notlage
+  ports: 
+  - "8080:8080"
+  networks:
+   - kafka_backend
+
+networks:
+ kafka_backend:
+  external: true
+

@@ -1,4 +1,4 @@
-package faeteam3.Notlage.notlage.model;
+package faeteam3.Notlage.model;
 
 /**
  * Enumeration for all the statuses a {@link Notlage} can be in.

@@ -1,4 +1,4 @@
-package faeteam3.Notlage.app;
+package faeteam3.Notlage.tests;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
