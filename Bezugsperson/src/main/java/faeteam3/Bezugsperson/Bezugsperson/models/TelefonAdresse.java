@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 public class TelefonAdresse extends TechAdresse {
 
     public TelefonAdresse(String telefonNummer) {
+    	super("foo");
         this.telefonNummer = telefonNummer;
     }
 

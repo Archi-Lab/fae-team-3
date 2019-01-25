@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import faeteam3.Bezugsperson.Bezugsperson.models.Bezugsperson;
 
 //@RepositoryRestResource(path = "Bezugsperson")
-public interface BezugspersonRepository extends CrudRepository<Bezugsperson, Long> {
+public interface BezugspersonRepository extends CrudRepository<Bezugsperson, String> {
 
 }
