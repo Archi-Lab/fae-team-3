@@ -3,6 +3,7 @@ package faeteam3.Notlage.controller;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +14,17 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import exceptions.IllegalActionExcepiton;
 import faeteam3.Notlage.kafka.SendeEinheit;
 import faeteam3.Notlage.model.Notlage;
 import faeteam3.Notlage.repository.NotlageRepository;
 import faeteam3.Notlage.model.support.Konstants;
 
 
+/**
+* Basis Controller Klasse für die Bearbeitung von Kafka Events
+*/
 @Service
 public class WorkerService 
 {
@@ -37,6 +43,14 @@ public class WorkerService
 		this.notlageRepository = notlageRepository;
 	}
 
+    /**
+    * Das Event von Ungewöhnliche Route wird geparst und eine neue Notlage wird erzeugt.
+    * <br> Bei Problemen findet keine Aktion statt.
+    * @author FAE: Team 3
+    * @version 1.0
+    * @param val
+    * <br> Die zu parsende Nachricht
+    */
 	public void bearbeiteMessageUngeRou(String val)
 	{
 		Notlage neue_nl = new Notlage();
@@ -50,15 +64,31 @@ public class WorkerService
 			jsonNode = objectMapper.readTree(val);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			alles_vorhanden=false;
 		}
+		
 		JsonNode node = null;
+		
+		// TODO teste darauf, ob DVP existiert und ob origin existiert
+		// und ob es bereits eine Notlage mit der originID gibt
+		
+		// TODO  das Parsen sollte sich auf die echten Daten des ungewöhnliche Route Topics beziehen
 		
 		node = jsonNode.get("id");
 		if (node !=null)
 		{
 			String field = jsonNode.get("id").asText();
-			neue_nl.setIdOrigin(field);
+			UUID id=null;
+			try
+			{
+				id = UUID.fromString(field);
+				neue_nl.setIdOrigin(id);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				alles_vorhanden=false;
+			}
 		}
 		
 		node = jsonNode.get("extraInfo");
@@ -71,7 +101,18 @@ public class WorkerService
 		if (node !=null)
 		{
 			String field = jsonNode.get("dvp_id").asText();
-			neue_nl.setDvp(Long.parseLong(field));
+			UUID id=null;
+			try
+			{
+				id = UUID.fromString(field);
+				// TODO  teste, ob dvp id existiert  else  alles_vorhanden=false;
+				neue_nl.setDvp(id);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				alles_vorhanden=false;
+			}
 		}
 		else
 			alles_vorhanden=false;
@@ -84,6 +125,14 @@ public class WorkerService
 		
 	}
 	
+    /**
+    * Das Event von Ungewöhnliches Verhalten wird geparst und eine neue Notlage wird erzeugt.
+    * <br> Bei Problemen findet keine Aktion statt.
+    * @author FAE: Team 3
+    * @version 1.0
+    * @param val
+    * <br> Die zu parsende Nachricht
+    */
 	public void bearbeiteMessageUngeVer(String val)
 	{
 		Notlage neue_nl = new Notlage();
@@ -99,14 +148,31 @@ public class WorkerService
 		} catch (IOException e) {
 			
 			e.printStackTrace();
+			alles_vorhanden=false;
 		}
+		
 		JsonNode node = null;
+		
+		// TODO teste darauf, ob DVP existiert und ob origin existiert
+		// und ob es bereits eine Notlage mit der originID gibt
+		
+		// TODO  das Parsen sollte sich auf die echten Daten des ungewöhnliches Verhalten Topics beziehen
 		
 		node = jsonNode.get("id");
 		if (node !=null)
 		{
 			String field = jsonNode.get("id").asText();
-			neue_nl.setIdOrigin(field);
+			UUID id=null;
+			try
+			{
+				id = UUID.fromString(field);
+				neue_nl.setIdOrigin(id);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				alles_vorhanden=false;
+			}
 		}
 		node = jsonNode.get("extraInfo");
 		if (node !=null)
@@ -118,7 +184,18 @@ public class WorkerService
 		if (node !=null)
 		{
 			String field = jsonNode.get("dvp_id").asText();
-			neue_nl.setDvp(Long.parseLong(field));
+			UUID id=null;
+			try
+			{
+				id = UUID.fromString(field);
+				// TODO  teste, ob dvp id existiert  else  alles_vorhanden=false;
+				neue_nl.setDvp(id);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				alles_vorhanden=false;
+			}
 		}
 		else
 			alles_vorhanden=false;

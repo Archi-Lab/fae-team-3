@@ -2,20 +2,25 @@ package faeteam3.Notlage.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Embeddable;
+import java.util.UUID;
 
+/**
+* Embedded Klasse, in der die DVP id enthalten ist
+*/
 @Embeddable
 public class DVP {
 	
-	private Long internDvpID;
+	private UUID internDvpID;
+	
 
     public DVP(){}
 
-    public DVP(Long id)
+    public DVP(UUID id)
     {
         this.internDvpID = id;
     }
     
-    public Long getDvpID()
+    public UUID getDvpID()
     {
     	return internDvpID;
     }

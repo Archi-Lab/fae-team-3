@@ -8,6 +8,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import faeteam3.Notlage.model.Notlage;
 
+/**
+* Repository für Notlagen
+*/
 @RepositoryRestResource(collectionResourceRel = "notlage", path = "notlage")
 public interface NotlageRepository   extends CrudRepository<Notlage, Long> 
 {

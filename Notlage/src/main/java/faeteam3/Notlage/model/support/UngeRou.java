@@ -2,6 +2,9 @@ package faeteam3.Notlage.model.support;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+* Helper Klasse zum testen
+*/
 public class UngeRou 
 {
 	

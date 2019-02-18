@@ -16,6 +16,10 @@ import faeteam3.Notlage.controller.WorkerService;
 import faeteam3.Notlage.model.support.UngeRou;
 import faeteam3.Notlage.model.support.UngeVer;
 
+/**
+* Receiver Einheit. 
+* <br> Hier befinden sich die Lauscher-Funktionen bezogen auf die Topics auf die gelauscht wird.
+*/
 public class ReceiverEinheit {
 
   private static final Logger LOGGER =
@@ -46,8 +50,13 @@ public class ReceiverEinheit {
   @Autowired
   private WorkerService serivce;
   
+  /**
+  * Lauscher Funktion auf Topic ungewöhnliche Route "name". 
+  */
   @KafkaListener(topics = "${topics.ungeRou}" , containerFactory = "kafkaListenerContainerFactoryY1") //  clientIdPrefix = "json",
   public void receive_topic_n1(ConsumerRecord<String, String> cr ) {
+	  
+	// TODO  Sollte auf das echte Topic von ungewöhnliche Route  lauschen
     
     LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
     		typeIdHeader(cr.headers()), cr.value(), cr.toString());
@@ -55,9 +64,13 @@ public class ReceiverEinheit {
     latch.countDown();
   }
   
+  /**
+   * Lauscher Funktion auf Topic ungewöhnliches Verhalten "name". 
+   */
   @KafkaListener(topics = "${topics.ungeVer}" , containerFactory = "kafkaListenerContainerFactoryY2") //  clientIdPrefix = "json",
   public void receive_topic_n2(ConsumerRecord<String, String> cr ) {
     
+	// TODO  Sollte auf das echte Topic von ungewöhnliches Verhalten  lauschen
     
     LOGGER.info("Logger 1 [JSON] received key {}: Type [{}] | Payload: {} | Record: {}", cr.key(),
     		typeIdHeader(cr.headers()), cr.value(), cr.toString());
@@ -65,6 +78,9 @@ public class ReceiverEinheit {
     latch.countDown();
   }
   
+  /**
+   * Kafka Event Header aufbereiter
+   */
   private static String typeIdHeader(Headers headers) {
       return StreamSupport.stream(headers.spliterator(), false)
               .filter(header -> header.key().equals("__TypeId__"))
@@ -72,6 +88,4 @@ public class ReceiverEinheit {
  }
   
 }
-
-
 

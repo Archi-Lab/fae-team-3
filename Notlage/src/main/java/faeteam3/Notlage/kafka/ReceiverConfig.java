@@ -19,6 +19,9 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
+/**
+* Receiver Konfiguration für Kafka
+*/
 @Configuration
 @EnableKafka
 public class ReceiverConfig {

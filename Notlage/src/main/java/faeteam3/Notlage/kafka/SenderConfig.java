@@ -21,7 +21,9 @@ import faeteam3.Notlage.model.support.UngeRou;
 import faeteam3.Notlage.model.support.UngeVer;
 
 
-
+/**
+* Sender Konfiguration für Kafka
+*/
 @Configuration
 public class SenderConfig {
 

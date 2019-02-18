@@ -1,9 +1,9 @@
 package faeteam3.Notlage.model;
 
 /**
- * Enumeration for all the statuses a {@link Notlage} can be in.
+ * Nummerierung für alle Status den eine {@link Notlage} haben kann.
  *
- * @author Florian Bornes
+ * @author FAE: Team 3
  */
 public enum Status {
 

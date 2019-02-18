@@ -1,20 +1,25 @@
 package faeteam3.Notlage.model.support;
 
+import java.util.UUID;
+
+/**
+* Klasse, für REST Put Funktion.
+* <br> Die BP id wird heir festgehalten.
+*/
 public class BPantwort 
 {
-	
-	private long bpID;
+	private UUID bpID;
 	
 	public BPantwort()
 	{
 		
 	}
 
-	public long getBpID() {
+	public UUID getBpID() {
 		return bpID;
 	}
 
-	public void setBpID(long bpID) {
+	public void setBpID(UUID bpID) {
 		this.bpID = bpID;
 	}
 

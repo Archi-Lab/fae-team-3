@@ -2,12 +2,18 @@ package faeteam3.Notlage.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+
+import java.util.UUID;
+
 import javax.persistence.*;
 
+/**
+* Embedded Klasse, die festhält, welche BP die Notlage gelöst hat, und dass die Notlage gelöst wurde.
+*/
 @Embeddable
 public class NotlageLoesung {
 
-    private Long notlageLoesenId=null;
+    private UUID loeserBpID=null;
     private boolean istGeloest=false;
 
 
@@ -26,21 +32,21 @@ public class NotlageLoesung {
 			this.istGeloest = true;
 	}
 
-	public Long getNotlageLoesungid() {
-		return notlageLoesenId;
+	public UUID getLoeserBpID() {
+		return loeserBpID;
 	}
 
-	public void setNotlageLoesungid(Long notlageLoesenId) 
+	public void setLoeserBpID(UUID loeserBpID) 
 	{
-		if(this.notlageLoesenId==null)
+		if(this.loeserBpID==null)
 		{
-			this.notlageLoesenId = notlageLoesenId;
+			this.loeserBpID = loeserBpID;
 		}
 	}
 
-	public void loesen(Long bpID) 
+	public void loesen(UUID bpID) 
 	{
-		setNotlageLoesungid(bpID);
+		setLoeserBpID(bpID);
 		setIstGeloest();
 		
 	}
