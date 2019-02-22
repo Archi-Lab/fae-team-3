@@ -15,7 +15,7 @@ public class Nachricht
 
 	public Nachricht(){}
 	
-	public Nachricht(UUID origin_id,String origin, UUID dvpid,String payload)
+	public Nachricht(UUID dvpid,String origin,UUID origin_id,String payload)
 	{
 		this.dvpid=dvpid;
 		this.setPayload(payload);

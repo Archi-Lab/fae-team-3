@@ -55,27 +55,29 @@ public class NotlageController {
 
     
     /**
-    * Diese Funktion dient nur für  das Testen von Kafka,  kann gelöscht werden.
-    * <br> hallo
-    * @param Keine
-    * @return HTML Status 200 OK
-    * @throws Keine
-    */
-    @GetMapping("/notlage/hello")
-    public ResponseEntity<?> hello(){
-    	LOGGER.info("SENDE Messages");
+	    * Diese Funktion dient nur für  das Testen von Kafka,
+	    * <br> hallo
+	    * @param Keine
+	    * @return HTML Status 200 OK
+	    * @throws Keine
+	    */
+	    @GetMapping("/notlage/hello")
+	    public ResponseEntity<?> hello(){
+	    	LOGGER.info("SENDE Messages");
 
 
-        IntStream.range(0, 2)
-                 .forEach(i -> 
-                 {
-                	 sender.sendUngeVer( new UngeVer(1L,"extraPayload","data3" ,(long) i));
-                	 sender.sendUngeRou( new UngeRou(3L,"extraPayload","data66",(long) i));
-                 }      
-                		 );
-        LOGGER.info("All messages received");
-        return  ResponseEntity.ok().build();
-    }
+	        IntStream.range(0, 2)
+	                 .forEach(i -> 
+	                 {
+	                	 sender.sendUngeVer( new UngeVer(1L,"extraPayload","data3" ,(long) i));
+	                	 sender.sendUngeRou( new UngeRou(3L,"extraPayload","data66",(long) i));
+	                 }      
+	                		 );
+	        LOGGER.info("All messages received");
+	        return  ResponseEntity.ok().build();
+	    }
+    
+   
     
     /**
     * Es wird eine neue Notlage Ressource angelegt. Die ID ist ein Long Wert.

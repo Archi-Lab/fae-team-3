@@ -60,6 +60,8 @@ public class SendeEinheit {
    		kafkaTemplate.send(id_notlage_topic, String.valueOf(payload.getNotlageId()),payload);
     }
   
+    
+    
   /**
    * Topic veröffentlicher Funktion auf das Topic UngeVer   
    * <br>  NUR ZUM TESTEN 

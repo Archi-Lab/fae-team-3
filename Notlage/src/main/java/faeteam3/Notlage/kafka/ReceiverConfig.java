@@ -9,15 +9,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.event.EventListener;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.event.NonResponsiveConsumerEvent;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
 * Receiver Konfiguration für Kafka
@@ -50,6 +53,7 @@ public class ReceiverConfig {
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		// client.id muss eizigartig sein, auch in bezug zu vielen instanzen. ist aber optionales feld
 		//    props.put("client.id", "Notlage_Client_consumer"+id_for_client);
+	
 
 		return props;
 	}
@@ -105,7 +109,8 @@ public class ReceiverConfig {
 
 		return factory;
 	}
-
+	
+	
 
 	@Bean
 	public ReceiverEinheit receiver() {

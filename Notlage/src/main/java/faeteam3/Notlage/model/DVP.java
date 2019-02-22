@@ -2,6 +2,9 @@ package faeteam3.Notlage.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Embeddable;
+
+import org.hibernate.annotations.Type;
+
 import java.util.UUID;
 
 /**
@@ -9,6 +12,7 @@ import java.util.UUID;
 */
 @Embeddable
 public class DVP {
+	
 	
 	private UUID internDvpID;
 	
