@@ -120,12 +120,11 @@ public class NotlageController {
     }
     
     /**
-     * Alle Notlage Ressorucen werden zurück gesendet.
+     * Alle Notlage Ressorucen in URI Link form werden zurück gesendet.
      * @author FAE: Team 3
      * @version 1.0
-     * @return HTML Status 200 OK und Körper der Ressource
-     * @throws IllegalActionExcepiton 
-     * <li> Wenn die Notlage Ressoruce nicht existiert
+     * @return HTML Status 200 OK und Link zur Ressource in URI Link form
+
      */
     @GetMapping(path = "/notlage")
     public ResponseEntity<?> getAllNotlagen(){
@@ -137,7 +136,10 @@ public class NotlageController {
         	// Vlt. wäre es besser, nur eine Liste mit ID Werten zurück zu geben.
             Resource<Notlage> resource = new Resource<>(n);
             resource.add(linkTo(methodOn(NotlageController.class).getNotlage(n.getNotlageId())).withSelfRel().withType("GET"));
-            resourceLst.add(resource);
+          //  resourceLst.add(resource);
+            Resource<org.springframework.hateoas.Link> rl = new Resource<>(linkTo(methodOn(NotlageController.class).getNotlage(n.getNotlageId())).withSelfRel().withType("GET"));
+            resourceLst.add(rl);
+            
         });
         Resources<Resource<Notlage>> resources = new Resources(resourceLst);
         resources.add(linkTo(methodOn(NotlageController.class).getAllNotlagen()).withSelfRel().withType("GET"));
