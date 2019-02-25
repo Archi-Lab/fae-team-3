@@ -8,14 +8,14 @@ import java.util.UUID;
 */
 public class Nachricht 
 {
-	private UUID dvpid;
+	private String dvpid;
 	private String origin;
-	private UUID origin_id;
+	private String origin_id;
 	private String payload;
 
 	public Nachricht(){}
 	
-	public Nachricht(UUID dvpid,String origin,UUID origin_id,String payload)
+	public Nachricht(String dvpid,String origin,String origin_id,String payload)
 	{
 		this.dvpid=dvpid;
 		this.setPayload(payload);
@@ -37,11 +37,11 @@ public class Nachricht
 		this.payload = payload;
 	}
 
-	public UUID getDvpid() {
+	public String getDvpid() {
 		return dvpid;
 	}
 
-	public void setDvpid(UUID dvpid) {
+	public void setDvpid(String dvpid) {
 		this.dvpid = dvpid;
 	}
 
@@ -53,11 +53,11 @@ public class Nachricht
 		this.origin = origin;
 	}
 
-	public UUID getOrigin_id() {
+	public String getOrigin_id() {
 		return origin_id;
 	}
 
-	public void setOrigin_id(UUID origin_id) {
+	public void setOrigin_id(String origin_id) {
 		this.origin_id = origin_id;
 	}
 

@@ -14,17 +14,17 @@ import java.util.UUID;
 public class DVP {
 	
 	
-	private UUID internDvpID;
+	private String internDvpID;
 	
 
     public DVP(){}
 
-    public DVP(UUID id)
+    public DVP(String id)
     {
         this.internDvpID = id;
     }
     
-    public UUID getDvpID()
+    public String getDvpID()
     {
     	return internDvpID;
     }

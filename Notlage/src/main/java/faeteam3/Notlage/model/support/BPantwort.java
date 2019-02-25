@@ -8,18 +8,18 @@ import java.util.UUID;
 */
 public class BPantwort 
 {
-	private UUID bpID;
+	private String bpID;
 	
 	public BPantwort()
 	{
 		
 	}
 
-	public UUID getBpID() {
+	public String getBpID() {
 		return bpID;
 	}
 
-	public void setBpID(UUID bpID) {
+	public void setBpID(String bpID) {
 		this.bpID = bpID;
 	}
 

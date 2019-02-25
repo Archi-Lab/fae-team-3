@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Embeddable
 public class NotlageLoesung {
 
-    private UUID loeserBpID=null;
+    private String loeserBpID=null;
     private boolean istGeloest=false;
 
 
@@ -32,11 +32,11 @@ public class NotlageLoesung {
 			this.istGeloest = true;
 	}
 
-	public UUID getLoeserBpID() {
+	public String getLoeserBpID() {
 		return loeserBpID;
 	}
 
-	public void setLoeserBpID(UUID loeserBpID) 
+	public void setLoeserBpID(String loeserBpID) 
 	{
 		if(this.loeserBpID==null)
 		{
@@ -44,7 +44,7 @@ public class NotlageLoesung {
 		}
 	}
 
-	public void loesen(UUID bpID) 
+	public void loesen(String bpID) 
 	{
 		setLoeserBpID(bpID);
 		setIstGeloest();

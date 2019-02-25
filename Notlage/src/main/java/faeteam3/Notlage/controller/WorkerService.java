@@ -72,21 +72,20 @@ public class WorkerService
 		// TODO teste darauf, ob DVP existiert und ob origin existiert
 		// und ob es bereits eine Notlage mit der originID gibt
 		
+		// TODO  teste, ob die angegebene DVP id doer origin id existiert
+		
 		// TODO  das Parsen sollte sich auf die echten Daten des ungewöhnliche Route Topics beziehen
 		
 		node = jsonNode.get("id");
 		if (node !=null)
 		{
 			String field = jsonNode.get("id").asText();
-			UUID id=null;
-			try
+			if (field.compareTo("")!=0)
 			{
-				id = UUID.fromString(field);
-				neue_nl.setIdOrigin(id);
+				neue_nl.setIdOrigin(field);
 			}
-			catch(Exception e)
+			else
 			{
-				e.printStackTrace();
 				alles_vorhanden=false;
 			}
 		}
@@ -101,18 +100,15 @@ public class WorkerService
 		if (node !=null)
 		{
 			String field = jsonNode.get("dvp_id").asText();
-			UUID id=null;
-			try
+			if (field.compareTo("")!=0)
 			{
-				id = UUID.fromString(field);
-				// TODO  teste, ob dvp id existiert  else  alles_vorhanden=false;
-				neue_nl.setDvp(id);
+				neue_nl.setDvp(field);
 			}
-			catch(Exception e)
+			else
 			{
-				e.printStackTrace();
 				alles_vorhanden=false;
 			}
+
 		}
 		else
 			alles_vorhanden=false;
@@ -156,23 +152,24 @@ public class WorkerService
 		// TODO teste darauf, ob DVP existiert und ob origin existiert
 		// und ob es bereits eine Notlage mit der originID gibt
 		
+
+		// TODO  teste, ob die angegebene DVP id doer origin id existiert
+		
 		// TODO  das Parsen sollte sich auf die echten Daten des ungewöhnliches Verhalten Topics beziehen
 		
 		node = jsonNode.get("id");
 		if (node !=null)
 		{
 			String field = jsonNode.get("id").asText();
-			UUID id=null;
-			try
+			if (field.compareTo("")!=0)
 			{
-				id = UUID.fromString(field);
-				neue_nl.setIdOrigin(id);
+				neue_nl.setIdOrigin(field);
 			}
-			catch(Exception e)
+			else
 			{
-				e.printStackTrace();
 				alles_vorhanden=false;
 			}
+
 		}
 		node = jsonNode.get("extraInfo");
 		if (node !=null)
@@ -184,18 +181,15 @@ public class WorkerService
 		if (node !=null)
 		{
 			String field = jsonNode.get("dvp_id").asText();
-			UUID id=null;
-			try
+			if (field.compareTo("")!=0)
 			{
-				id = UUID.fromString(field);
-				// TODO  teste, ob dvp id existiert  else  alles_vorhanden=false;
-				neue_nl.setDvp(id);
+				neue_nl.setDvp(field);
 			}
-			catch(Exception e)
+			else
 			{
-				e.printStackTrace();
 				alles_vorhanden=false;
 			}
+
 		}
 		else
 			alles_vorhanden=false;

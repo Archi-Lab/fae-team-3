@@ -45,8 +45,8 @@ public class NotlageRESTfulTests {
 	@Test
     public void intern_Basis()
     {
-		UUID bp_id=UUID.randomUUID();
-		Nachricht nachricht = new Nachricht(UUID.randomUUID(),"ungewöhnliche Route",UUID.randomUUID(),"payload");
+		String bp_id="4445";
+		Nachricht nachricht = new Nachricht("31","ungewöhnliche Route","88","payload");
 		Notlage notlage = new Notlage();
 		notlage.setExtraDatat(nachricht.getPayload());
 		notlage.setDvp(nachricht.getDvpid());
@@ -65,25 +65,20 @@ public class NotlageRESTfulTests {
 	@Test
     public void intern_Repository()
     {
-		UUID bp_id=UUID.randomUUID();
-		UUID dvp_id=UUID.randomUUID();
-		Nachricht nachricht = new Nachricht(dvp_id,"ungewöhnliches Verhalten",UUID.randomUUID(),"payload");
+		String bp_id="1777";
+		String dvp_id="909";
+		Nachricht nachricht = new Nachricht(dvp_id,"ungewöhnliches Verhalten","54","payload");
 		Notlage not = new Notlage();
 		not.setExtraDatat(nachricht.getPayload());
 		not.setDvp(nachricht.getDvpid());
 		not.setIdOrigin(nachricht.getOrigin_id());
 		not.setOrigin(nachricht.getOrigin());
 		Notlage nnn = notlageRepository.save(not);
-		System.out.println(nnn.getDvp().getDvpID());
-		System.out.println(dvp_id);
 
-		System.out.println(not.getDvp().getDvpID());
-		
 		List<Notlage> list_nots = notlageRepository.findByDvpInternDvpID(dvp_id);
-		LOGGER.info(String.valueOf(list_nots.size()));
-		System.out.println(list_nots);
-		//Notlage notlage = list_nots.get(0);
-		Notlage notlage = nnn;
+
+		Notlage notlage = list_nots.get(0);
+	//	Notlage notlage = nnn;
 		Assert.assertEquals(notlage.getDvp().getDvpID(),dvp_id);
 		
 		notlage.bestaetigeNotlage(bp_id);

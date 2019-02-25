@@ -29,7 +29,7 @@ public class Notlage  {
     
     private String origin;
     
-    private UUID idOrigin;
+    private String idOrigin;
 
 
     @Embedded
@@ -44,7 +44,7 @@ public class Notlage  {
         return dvp;
     }
     
-    public void setDvp(UUID id) {
+    public void setDvp(String id) {
     	dvp= new DVP(id);
     }
 
@@ -77,13 +77,13 @@ public class Notlage  {
     	return bestaetigung;
     }
     
-    public void bestaetigeNotlage(UUID bpID)
+    public void bestaetigeNotlage(String bpID)
     {
     	bestaetigung.bestaetigen(bpID);
     	markBestaetigt();
     }
     
-    public void loeseNotlage(UUID bpID)
+    public void loeseNotlage(String bpID)
     {
     	loesung.loesen(bpID);
     	 markGeloest();
@@ -136,12 +136,12 @@ public class Notlage  {
 	}
 
 
-	public UUID getIdOrigin() {
+	public String getIdOrigin() {
 		return idOrigin;
 	}
 
 
-	public void setIdOrigin(UUID idOrigin) {
+	public void setIdOrigin(String idOrigin) {
 		this.idOrigin = idOrigin;
 	}
 

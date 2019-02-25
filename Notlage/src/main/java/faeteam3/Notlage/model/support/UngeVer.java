@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UngeVer 
 {
 	
-	public Long id;
+	public String id;
 	
 	public String extraInfo;
 	
 	public String data2;
 	
-	public Long dvp_id;
+	public String dvp_id;
 	
 	public UngeVer()
 	{
@@ -22,10 +22,10 @@ public class UngeVer
 	}
 	
 	public UngeVer(
-			@JsonProperty("id") Long id,
+			@JsonProperty("id") String id,
 			@JsonProperty("extraInfo") String extraInfo,
 			@JsonProperty("data2") String data2,
-			@JsonProperty("dvp_id") Long dvp_id)
+			@JsonProperty("dvp_id") String dvp_id)
 	{
 		this.id=id;
 		this.extraInfo=extraInfo;

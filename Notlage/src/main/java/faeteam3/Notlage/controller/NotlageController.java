@@ -69,8 +69,8 @@ public class NotlageController {
 	        IntStream.range(0, 2)
 	                 .forEach(i -> 
 	                 {
-	                	 sender.sendUngeVer( new UngeVer(1L,"extraPayload","data3" ,(long) i));
-	                	 sender.sendUngeRou( new UngeRou(3L,"extraPayload","data66",(long) i));
+	                	 sender.sendUngeVer( new UngeVer("112","extraPayload","data3" ,String.valueOf(i)));
+	                	 sender.sendUngeRou( new UngeRou("336","extraPayload","data66",String.valueOf(i)));
 	                 }      
 	                		 );
 	        LOGGER.info("All messages received");

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Embeddable
 public class NotlageBestaetigung {
 
-    private UUID bestaetigerBpID=null;
+    private String bestaetigerBpID=null;
     private boolean istBestaetigt = false;
 
     public NotlageBestaetigung()
@@ -30,11 +30,11 @@ public class NotlageBestaetigung {
 			this.istBestaetigt = true;
 	}
 
-	public UUID getBestaetigerBpID() {
+	public String getBestaetigerBpID() {
 		return bestaetigerBpID;
 	}
 
-	public void setBestaetigerBpID(UUID bestaetigerBpID) 
+	public void setBestaetigerBpID(String bestaetigerBpID) 
 	{
 		if(this.bestaetigerBpID==null)
 		{
@@ -42,7 +42,7 @@ public class NotlageBestaetigung {
 		}
 	}
 
-	public void bestaetigen(UUID bpID) 
+	public void bestaetigen(String bpID) 
 	{
 		setBestaetigerBpID(bpID);
 		setIstBestaetigt();

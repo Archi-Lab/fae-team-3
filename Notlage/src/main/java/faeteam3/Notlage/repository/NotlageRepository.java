@@ -19,7 +19,7 @@ public interface NotlageRepository   extends CrudRepository<Notlage, Long>
 	
 	Optional<Notlage> findById(Long id);
 	
-	List<Notlage> findByDvpInternDvpID(UUID internDvpID);
+	List<Notlage> findByDvpInternDvpID(String internDvpID);
 
  //   List<Notlage> findBybehoben(boolean behoben);
  //   List<Notlage> findBydvpid(Long dvpid);
