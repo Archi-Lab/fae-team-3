@@ -1,8 +1,13 @@
 package faeteam3.Notlage.model;
 
 
+import java.util.UUID;
+
 import javax.persistence.*;
 
+/**
+* Klasse, welche die Notlage angibt.
+*/
 @Entity(name = "notlage")
 public class Notlage  {
 	
@@ -39,11 +44,13 @@ public class Notlage  {
         return dvp;
     }
     
-    public void setDvp(long id) {
+    public void setDvp(String id) {
     	dvp= new DVP(id);
     }
 
     
+    /**
+     */
     public ExtraData getExtraData() {
         return data;
     }
@@ -70,13 +77,13 @@ public class Notlage  {
     	return bestaetigung;
     }
     
-    public void bestaetigeNotlage(Long bpID)
+    public void bestaetigeNotlage(String bpID)
     {
     	bestaetigung.bestaetigen(bpID);
     	markBestaetigt();
     }
     
-    public void loeseNotlage(Long bpID)
+    public void loeseNotlage(String bpID)
     {
     	loesung.loesen(bpID);
     	 markGeloest();

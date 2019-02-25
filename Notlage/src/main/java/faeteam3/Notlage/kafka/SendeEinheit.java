@@ -12,6 +12,10 @@ import faeteam3.Notlage.model.Notlage;
 import faeteam3.Notlage.model.support.UngeRou;
 import faeteam3.Notlage.model.support.UngeVer;
 
+/**
+ * Sende Einheit
+ * <br> Hier befinden sich die Funktionen, um auf Kafka Topics zu veröffentlichen.
+ */
 @Service
 public class SendeEinheit {
 
@@ -47,16 +51,30 @@ public class SendeEinheit {
 //	}
   
 
-  public void sendNotlage(Notlage payload) {
-    LOGGER.info("sending payload='{}'", payload);
-    kafkaTemplate.send(id_notlage_topic, String.valueOf(payload.getNotlageId()),payload);
-  }
+    /**
+     * Topic veröffentlicher Funktion auf das Topic Notlage 
+     */
+    public void sendNotlage(Notlage payload) 
+    {
+    	LOGGER.info("sending payload='{}'", payload);
+   		kafkaTemplate.send(id_notlage_topic, String.valueOf(payload.getNotlageId()),payload);
+    }
   
+    
+    
+  /**
+   * Topic veröffentlicher Funktion auf das Topic UngeVer   
+   * <br>  NUR ZUM TESTEN 
+   */
   public void sendUngeVer(UngeVer payload) {
 	    LOGGER.info("sending payload='{}'", payload);
 	    kafkaTemplate2.send(id_UngeVer_topic, String.valueOf(payload.id),payload);
 	  }
   
+  /**
+   * Topic veröffentlicher Funktion auf das Topic UngeRou   
+   * <br>  NUR ZUM TESTEN 
+   */
   public void sendUngeRou(UngeRou payload) {
 	    LOGGER.info("sending payload='{}'", payload);
 	    kafkaTemplate3.send(id_UngeRou_topic, String.valueOf(payload.id),payload);

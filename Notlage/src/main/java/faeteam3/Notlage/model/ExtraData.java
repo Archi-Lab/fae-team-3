@@ -2,6 +2,9 @@ package faeteam3.Notlage.model;
 
 import javax.persistence.Embeddable;
 
+/**
+* Embedded Klasse, in der extra Daten enthalten sind.
+*/
 @Embeddable
 public class ExtraData {
 	
