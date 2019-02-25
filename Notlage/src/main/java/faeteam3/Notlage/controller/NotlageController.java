@@ -33,6 +33,9 @@ import java.util.stream.IntStream;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+/**
+* Basis Controller Klasse für die Bearbeitung von REST anfragen
+*/
 @RepositoryRestController()
 public class NotlageController {
 
@@ -49,30 +52,57 @@ public class NotlageController {
     
     public NotlageController()
     {}
-    
-    
-    // Kafka  test
-    @GetMapping("/notlage/hello")
-    public ResponseEntity<?> hello(){
-    	LOGGER.info("SENDE Messages");
 
-        IntStream.range(0, 2)
-                 .forEach(i -> 
-                 {
-                	 sender.sendUngeVer( new UngeVer(1L,"extraPayload","data3" ,(long) i));
-                	 sender.sendUngeRou( new UngeRou(3L,"extraPayload","data66",(long) i));
-                 }      
-                		 );
-        LOGGER.info("All messages received");
-        return  ResponseEntity.ok().build();
-    }
     
+    /**
+	    * Diese Funktion dient nur für  das Testen von Kafka,
+	    * <br> hallo
+	    * @param Keine
+	    * @return HTML Status 200 OK
+	    * @throws Keine
+	    */
+	    @GetMapping("/notlage/hello")
+	    public ResponseEntity<?> hello(){
+	    	LOGGER.info("SENDE Messages");
+
+
+	        IntStream.range(0, 2)
+	                 .forEach(i -> 
+	                 {
+	                	 sender.sendUngeVer( new UngeVer("112","extraPayload","data3" ,String.valueOf(i)));
+	                	 sender.sendUngeRou( new UngeRou("336","extraPayload","data66",String.valueOf(i)));
+	                 }      
+	                		 );
+	        LOGGER.info("All messages received");
+	        return  ResponseEntity.ok().build();
+	    }
+    
+   
+    
+    /**
+    * Es wird eine neue Notlage Ressource angelegt. Die ID ist ein Long Wert.
+    * @author FAE: Team 3
+    * @version 1.0
+    * @param nachricht
+    * <br> Die originID darf nicht bereits mit einer Notlage assoziiert sein.
+    * <br> Die Origin (Herkunft) muss eines der folgenden {@link faeteam3.Notlage.model.support.Konstants Werte} haben:
+    * <li> ungewöhnliches Verhalten
+    * <li> ungewöhnliche Route
+    * @return HTML Status 200 OK und Körper der Ressource
+    * @throws IllegalActionExcepiton 
+    * <li> Bei falschen Eingabedaten.
+    */
     @PostMapping("/notlage")
     ResponseEntity<?> addNotlage(@RequestBody Nachricht nachricht) 
     {
     	LOGGER.info("POST Notlage");
+    	// TODO teste auf andere fehlende Informationen und darauf, ob DVP existiert und ob origin existiert
+    	// und ob es bereits eine Notlage mit der originID gibt
     	if (nachricht.getDvpid()==null)
+    	{
 		      throw new IllegalActionExcepiton("Illegale DVP ID-" + nachricht.getDvpid());
+		      
+    	}
 
 		Notlage notlage = new Notlage();
 		notlage.setDvp(nachricht.getDvpid());
@@ -89,6 +119,13 @@ public class NotlageController {
        return ResponseEntity.status(HttpStatus.OK).body(res);	     
     }
     
+    /**
+     * Alle Notlage Ressorucen in URI Link form werden zurück gesendet.
+     * @author FAE: Team 3
+     * @version 1.0
+     * @return HTML Status 200 OK und Link zur Ressource in URI Link form
+
+     */
     @GetMapping(path = "/notlage")
     public ResponseEntity<?> getAllNotlagen(){
     	LOGGER.info("GET ALL NOTLAGEN");
@@ -96,9 +133,13 @@ public class NotlageController {
         final List<Resource> resourceLst = new ArrayList<>();
         notlageList.forEach(n->
         {
+        	// Vlt. wäre es besser, nur eine Liste mit ID Werten zurück zu geben.
             Resource<Notlage> resource = new Resource<>(n);
             resource.add(linkTo(methodOn(NotlageController.class).getNotlage(n.getNotlageId())).withSelfRel().withType("GET"));
-            resourceLst.add(resource);
+          //  resourceLst.add(resource);
+            Resource<org.springframework.hateoas.Link> rl = new Resource<>(linkTo(methodOn(NotlageController.class).getNotlage(n.getNotlageId())).withSelfRel().withType("GET"));
+            resourceLst.add(rl);
+            
         });
         Resources<Resource<Notlage>> resources = new Resources(resourceLst);
         resources.add(linkTo(methodOn(NotlageController.class).getAllNotlagen()).withSelfRel().withType("GET"));
@@ -107,6 +148,15 @@ public class NotlageController {
         return  ResponseEntity.ok(resources);
     }
 
+    /**
+     * Die spezifizierte Notlage Ressoruce wird zurück gesendet.
+     * @author FAE: Team 3
+     * @version 1.0
+     * @param id Pfad Variable. ID der Notlage Ressource.
+     * @return HTML Status 200 OK und Körper der Ressource
+     * @throws IllegalActionExcepiton 
+     * <li> Wenn die Notlage Ressoruce nicht existiert
+     */
     @GetMapping(path = "/notlage/{id}")
     public ResponseEntity<?> getNotlage(@PathVariable Long id){
     	
@@ -117,7 +167,9 @@ public class NotlageController {
 		if (!optNotlage.isPresent())
 		{
 			LOGGER.info("Notlage<"+ id+"> not found");
-		    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
+		   // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		    
 //		    throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
 		}
 		Notlage notlage = optNotlage.get();
@@ -130,9 +182,24 @@ public class NotlageController {
 			res.add(linkTo(methodOn(NotlageController.class).notlageLoesen(id,null)).withRel("bestätigen").withType("PUT"));
 
 		LOGGER.info("Notlage<"+ id+"> found");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
+    /**
+     * Die Notlage wird als Bestätigt markiert.
+     * <br> Wenn die Notlage bereits gelöst ist, dann wird die Ressource nicht verändert und es wird Exception geworfen.
+     * <br> Wenn die Notlage bereits bestätigt ist, dann wird die Ressource nicht verändert und es wird keine Exception geworfen.
+     * @author FAE: Team 3
+     * @version 1.0
+     * @param id Pfad Variable. ID der Notlage Ressource.
+     * @param antwort Format: {@link faeteam3.Notlage.model.support.BPantwort BPantwort}
+     * <br> Die BP ID muss existieren.
+     * @return HTML Status 202 ACCEPTED und Körper der Ressource
+     * @throws IllegalActionExcepiton 
+     * <li> Bei falschen Eingabedaten
+     * <li> Wenn die Notlage Ressoruce nicht existiert
+     * <li> Wenn die Notlage bereits gelöst wurde
+     */
     @PutMapping("/notlage/{id}/bestaetigen")
     public ResponseEntity<?> notlageBestaetigen(@PathVariable Long id, @RequestBody BPantwort antwort) {
     	
@@ -144,6 +211,8 @@ public class NotlageController {
 			LOGGER.info("Notlage<"+ id+"> not found");
 		    throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
 		}
+		
+		// TODO teste darauf, ob BP existiert  und ob bereits gelöst ist
 		
 		Notlage notlage = optNotlage.get();
 		LOGGER.info("Tries to mark Notlage<" + notlage.getNotlageId() +"> as confirmed.");
@@ -165,6 +234,20 @@ public class NotlageController {
         
     }
 
+    /**
+     * Die Notlage wird als Gelöst markiert.
+     * <br> Notlage muss nicht bereits bestätigt sein.
+     * <br> Wenn die Notlage bereits gelöst ist, dann wird die Ressource nicht verändert und es wird keine Exception geworfen.
+     * @author FAE: Team 3
+     * @version 1.0
+     * @param id Pfad Variable. ID der Notlage Ressource.
+     * @param antwort Format: {@link faeteam3.Notlage.model.support.BPantwort BPantwort}
+     * <br> Die BP ID muss existieren.
+     * @return HTML Status 202 ACCEPTED und Körper der Ressource
+     * @throws IllegalActionExcepiton 
+     * <li> Bei falschen Eingabedaten.
+     * <li> Wenn die Notlage Ressoruce nicht existiert
+     */
     @PutMapping("/notlage/{id}/loesen")
     public ResponseEntity<?> notlageLoesen(@PathVariable Long id, @RequestBody BPantwort antwort) {
     	
@@ -177,6 +260,8 @@ public class NotlageController {
 			LOGGER.info("Notlage<"+ id+"> not found");
 		    throw new IllegalActionExcepiton("Existiert Nicht!- " + id);
 		}
+		
+		// TODO teste darauf, ob BP existiert
 		
 		Notlage notlage = optNotlage.get();
 		LOGGER.info("Tries to mark Notlage<" + notlage.getNotlageId() +"> as solved.");
@@ -194,32 +279,15 @@ public class NotlageController {
 		if(notlage.isBestaetigt()==false)
 			res.add(linkTo(methodOn(NotlageController.class).notlageLoesen(id,null)).withRel("bestätigen").withType("PUT"));
 
-		
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
         
     }
-    
-    @RequestMapping(path="/notlage/info", method=RequestMethod.GET)
-    public ResponseEntity<Object> info() 
+      
+	// vlt löshen mal testen
+	@ExceptionHandler
+	void handleIllegalArgumentException( IllegalArgumentException e,  HttpServletResponse response) throws IOException 
 	{
-		Resource<String> res =new Resource<>("Für ein Post bitte DVP id und String(Payload) angeben");
-        return ResponseEntity.status(HttpStatus.OK).body(res);	  
-    }
-    
-	
-	@RequestMapping("/version")
-    public String version() 
-	{
-        return "1";
-    }
-	
-	 @ExceptionHandler
-	  void handleIllegalArgumentException
-	  (  IllegalArgumentException e, HttpServletResponse response) throws IOException 
-	  	{  response.sendError(HttpStatus.BAD_REQUEST.value());  }
-	
-	
-
-
+		response.sendError(HttpStatus.BAD_REQUEST.value());
+	}
 
 }

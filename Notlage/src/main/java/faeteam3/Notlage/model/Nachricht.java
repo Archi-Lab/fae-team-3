@@ -1,17 +1,21 @@
 package faeteam3.Notlage.model;
 
-import javax.persistence.Embeddable;
+import java.util.UUID;
 
+/**
+* Klasse, in der alle Daten enthalten sind, um eine Notlage zu erzeugen
+* <br> Diese Klasse wird für die REST Post Funktion benötigt.
+*/
 public class Nachricht 
 {
-	private Long dvpid;
+	private String dvpid;
 	private String origin;
 	private String origin_id;
-	private  String payload;
+	private String payload;
 
 	public Nachricht(){}
 	
-	public Nachricht(String origin_id,String origin, Long dvpid,String payload)
+	public Nachricht(String dvpid,String origin,String origin_id,String payload)
 	{
 		this.dvpid=dvpid;
 		this.setPayload(payload);
@@ -33,11 +37,11 @@ public class Nachricht
 		this.payload = payload;
 	}
 
-	public Long getDvpid() {
+	public String getDvpid() {
 		return dvpid;
 	}
 
-	public void setDvpid(long dvpid) {
+	public void setDvpid(String dvpid) {
 		this.dvpid = dvpid;
 	}
 

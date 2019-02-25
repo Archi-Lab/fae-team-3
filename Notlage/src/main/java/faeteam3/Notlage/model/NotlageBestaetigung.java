@@ -2,12 +2,18 @@ package faeteam3.Notlage.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+
+import java.util.UUID;
+
 import javax.persistence.*;
 
+/**
+* Embedded Klasse, die festhält, welche BP die Notlage bestätigt hat, und dass die Notlage bestätigt wurde.
+*/
 @Embeddable
 public class NotlageBestaetigung {
 
-    private Long notlageBestaetigungId=null;
+    private String bestaetigerBpID=null;
     private boolean istBestaetigt = false;
 
     public NotlageBestaetigung()
@@ -24,21 +30,21 @@ public class NotlageBestaetigung {
 			this.istBestaetigt = true;
 	}
 
-	public Long getNotlageBestaetigungid() {
-		return notlageBestaetigungId;
+	public String getBestaetigerBpID() {
+		return bestaetigerBpID;
 	}
 
-	public void setNotlageBestaetigungid(Long notlageBestaetigungId) 
+	public void setBestaetigerBpID(String bestaetigerBpID) 
 	{
-		if(this.notlageBestaetigungId==null)
+		if(this.bestaetigerBpID==null)
 		{
-			this.notlageBestaetigungId = notlageBestaetigungId;
+			this.bestaetigerBpID = bestaetigerBpID;
 		}
 	}
 
-	public void bestaetigen(Long bpID) 
+	public void bestaetigen(String bpID) 
 	{
-		setNotlageBestaetigungid(bpID);
+		setBestaetigerBpID(bpID);
 		setIstBestaetigt();
 	}
 
